@@ -3,37 +3,23 @@ import couple1 from "@/assets/couple-1.jpg";
 import couple2 from "@/assets/couple-2.jpg";
 import venue from "@/assets/venue.jpg";
 import hero from "@/assets/hero-wedding.jpg";
-import frameGold from "@/assets/frame-gold.png";
 import FloralDecoration from "./FloralDecoration";
 import SparklesDecoration from "./SparklesDecoration";
-interface FramedPhotoProps {
+
+interface PhotoProps {
   src: string;
   alt: string;
   className?: string;
-  imageClassName?: string;
 }
-const FramedPhoto = ({
-  src,
-  alt,
-  className = "",
-  imageClassName = ""
-}: FramedPhotoProps) => {
+
+const Photo = ({ src, alt, className = "" }: PhotoProps) => {
   return (
-    <div className={`relative group ${className}`}>
-      {/* Gold frame overlay */}
+    <div className={`relative group overflow-hidden rounded-2xl shadow-card ${className}`}>
       <img 
-        src={frameGold} 
-        alt="" 
-        className="absolute inset-0 w-full h-full object-fill z-10 pointer-events-none"
+        src={src} 
+        alt={alt} 
+        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
       />
-      {/* Photo inside frame */}
-      <div className="absolute inset-[12%] overflow-hidden rounded-sm">
-        <img 
-          src={src} 
-          alt={alt} 
-          className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 ${imageClassName}`}
-        />
-      </div>
     </div>
   );
 };
@@ -86,26 +72,26 @@ const GallerySection = () => {
 
           {/* Second photo */}
           <div className={`col-span-5 transition-all duration-700 delay-400 ${isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-95"}`}>
-            <FramedPhoto src={images[1].src} alt={images[1].alt} className="h-48 md:h-56" />
+            <Photo src={images[1].src} alt={images[1].alt} className="h-48 md:h-56" />
           </div>
 
           {/* Third photo */}
           <div className={`col-span-5 transition-all duration-700 delay-500 ${isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-95"}`}>
-            <FramedPhoto src={images[2].src} alt={images[2].alt} className="h-48 md:h-52" />
+            <Photo src={images[2].src} alt={images[2].alt} className="h-48 md:h-52" />
           </div>
 
           {/* Fourth photo - square */}
           <div className={`col-span-4 flex justify-center items-center transition-all duration-700 delay-600 ${isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-95"}`}>
-            <FramedPhoto src={images[3].src} alt={images[3].alt} className="w-32 h-32 md:w-40 md:h-40" />
+            <Photo src={images[3].src} alt={images[3].alt} className="w-32 h-32 md:w-40 md:h-40" />
           </div>
 
           {/* Additional decorative photos */}
           <div className={`col-span-4 transition-all duration-700 delay-700 ${isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-95"}`}>
-            <FramedPhoto src={hero} alt="Bouquet" className="h-32 md:h-40" />
+            <Photo src={hero} alt="Bouquet" className="h-32 md:h-40" />
           </div>
 
           <div className={`col-span-4 transition-all duration-700 delay-800 ${isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-95"}`}>
-            <FramedPhoto src={venue} alt="Table setting" className="h-32 md:h-40" />
+            <Photo src={venue} alt="Table setting" className="h-32 md:h-40" />
           </div>
         </div>
 

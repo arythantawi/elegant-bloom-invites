@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import FloralDecoration from "./FloralDecoration";
 import SparklesDecoration from "./SparklesDecoration";
+import frameGold from "@/assets/frame-gold.png";
 
 const CoupleSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -59,10 +60,17 @@ const CoupleSection = () => {
             }`}
           >
             <div className="glass-card rounded-2xl p-8 touch-lift border-dusty-rose/20">
-              <div className={`w-28 h-28 mx-auto mb-6 rounded-full bg-gradient-to-br from-dusty-rose to-mauve flex items-center justify-center transition-all duration-500 delay-400 ${
+              <div className={`relative w-32 h-40 mx-auto mb-6 transition-all duration-500 delay-400 ${
                 isVisible ? "scale-100 rotate-0" : "scale-0 rotate-180"
               }`}>
-                <span className="font-script text-5xl text-cream">O</span>
+                <img 
+                  src={frameGold} 
+                  alt="Frame" 
+                  className="absolute inset-0 w-full h-full object-contain z-10 pointer-events-none"
+                />
+                <div className="absolute inset-3 rounded-[50%] bg-gradient-to-br from-dusty-rose to-mauve flex items-center justify-center">
+                  <span className="font-script text-4xl text-cream">O</span>
+                </div>
               </div>
               <h3 className={`font-elegant text-2xl md:text-3xl text-foreground mb-2 transition-all duration-500 delay-500 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
@@ -87,10 +95,17 @@ const CoupleSection = () => {
             }`}
           >
             <div className="glass-card rounded-2xl p-8 touch-lift border-sage-green/20">
-              <div className={`w-28 h-28 mx-auto mb-6 rounded-full bg-gradient-to-br from-sage-green to-olive-green flex items-center justify-center transition-all duration-500 delay-600 ${
+              <div className={`relative w-32 h-40 mx-auto mb-6 transition-all duration-500 delay-600 ${
                 isVisible ? "scale-100 rotate-0" : "scale-0 -rotate-180"
               }`}>
-                <span className="font-script text-5xl text-cream">M</span>
+                <img 
+                  src={frameGold} 
+                  alt="Frame" 
+                  className="absolute inset-0 w-full h-full object-contain z-10 pointer-events-none"
+                />
+                <div className="absolute inset-3 rounded-[50%] bg-gradient-to-br from-sage-green to-olive-green flex items-center justify-center">
+                  <span className="font-script text-4xl text-cream">M</span>
+                </div>
               </div>
               <h3 className={`font-elegant text-2xl md:text-3xl text-foreground mb-2 transition-all duration-500 delay-700 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"

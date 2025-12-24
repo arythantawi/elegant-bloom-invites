@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Heart } from "lucide-react";
+import ConfettiEffect from "./ConfettiEffect";
 
 interface EnvelopeOpeningProps {
   onOpen: () => void;
@@ -8,9 +9,15 @@ interface EnvelopeOpeningProps {
 const EnvelopeOpening = ({ onOpen }: EnvelopeOpeningProps) => {
   const [isOpening, setIsOpening] = useState(false);
   const [isFullyOpen, setIsFullyOpen] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
 
   const handleOpen = () => {
     setIsOpening(true);
+    
+    // Trigger confetti after flap starts opening
+    setTimeout(() => {
+      setShowConfetti(true);
+    }, 400);
     
     // After flap opens, slide up the card
     setTimeout(() => {
@@ -20,11 +27,13 @@ const EnvelopeOpening = ({ onOpen }: EnvelopeOpeningProps) => {
     // Transition to main content
     setTimeout(() => {
       onOpen();
-    }, 2000);
+    }, 2500);
   };
 
   return (
     <div className="fixed inset-0 z-[100] bg-gradient-to-b from-blush-pink via-soft-rose/50 to-cream-white flex items-center justify-center overflow-hidden">
+      {/* Confetti Effect */}
+      <ConfettiEffect isActive={showConfetti} />
       {/* Decorative Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-10 left-10 w-32 h-32 bg-warm-blush/20 rounded-full blur-3xl animate-pulse" />

@@ -6,7 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 const CaricatureSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [selectedStyle, setSelectedStyle] = useState("romantic");
+  const [selectedStyle, setSelectedStyle] = useState("cartoon");
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -28,7 +28,6 @@ const CaricatureSection = () => {
   }, []);
 
   const styles = [
-    { id: "romantic", name: "Romantis", emoji: "💕" },
     { id: "cartoon", name: "Kartun", emoji: "🎨" },
     { id: "elegant", name: "Elegan", emoji: "✨" },
     { id: "whimsical", name: "Magical", emoji: "🦋" },

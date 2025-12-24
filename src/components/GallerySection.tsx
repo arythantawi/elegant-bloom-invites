@@ -18,7 +18,24 @@ const FramedPhoto = ({
   className = "",
   imageClassName = ""
 }: FramedPhotoProps) => {
-  return;
+  return (
+    <div className={`relative group ${className}`}>
+      {/* Gold frame overlay */}
+      <img 
+        src={frameGold} 
+        alt="" 
+        className="absolute inset-0 w-full h-full object-fill z-10 pointer-events-none"
+      />
+      {/* Photo inside frame */}
+      <div className="absolute inset-[12%] overflow-hidden rounded-sm">
+        <img 
+          src={src} 
+          alt={alt} 
+          className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 ${imageClassName}`}
+        />
+      </div>
+    </div>
+  );
 };
 const GallerySection = () => {
   const [isVisible, setIsVisible] = useState(false);

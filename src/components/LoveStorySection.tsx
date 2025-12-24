@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import coupleImage from "@/assets/couple-2.jpg";
+import FloralDecoration from "./FloralDecoration";
+import SparklesDecoration from "./SparklesDecoration";
 
 const LoveStorySection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -19,26 +21,23 @@ const LoveStorySection = () => {
   }, []);
 
   const milestones = [
-    { year: "2020", title: "Awal Bertemu", description: "Takdir mempertemukan kami di perjalanan yang sama" },
-    { year: "2022", title: "Perjuangan", description: "Melewati suka dan duka bersama menguatkan cinta" },
-    { year: "2025", title: "Lamaran", description: "Sebuah pertanyaan yang mengubah segalanya" },
-    { year: "2026", title: "Pernikahan", description: "Dua hati menjadi satu dalam ikatan suci" },
+    { year: "2020", title: "Awal Bertemu", description: "Takdir mempertemukan kami di perjalanan yang sama", color: "dusty-rose" },
+    { year: "2022", title: "Perjuangan", description: "Melewati suka dan duka bersama menguatkan cinta", color: "sage-green" },
+    { year: "2025", title: "Lamaran", description: "Sebuah pertanyaan yang mengubah segalanya", color: "dusty-rose" },
+    { year: "2026", title: "Pernikahan", description: "Dua hati menjadi satu dalam ikatan suci", color: "sage-green" },
   ];
 
   return (
     <section
       id="love-story-section"
-      className="py-24 bg-cream-white relative overflow-hidden"
+      className="py-24 bg-cream relative overflow-hidden"
     >
       {/* Decorative Background */}
-      <div className={`absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-soft-rose/20 to-transparent rounded-full blur-3xl transition-all duration-1000 ${
-        isVisible ? "opacity-100 scale-100" : "opacity-0 scale-50"
-      }`} />
-      <div className={`absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-blush-pink/20 to-transparent rounded-full blur-3xl transition-all duration-1000 delay-200 ${
-        isVisible ? "opacity-100 scale-100" : "opacity-0 scale-50"
-      }`} />
+      <FloralDecoration position="top-right" size="md" className="opacity-30" />
+      <FloralDecoration position="bottom-left" size="md" className="opacity-30" />
+      <SparklesDecoration count={4} />
 
-      <div className="container max-w-6xl mx-auto px-4">
+      <div className="container max-w-6xl mx-auto px-4 relative z-10">
         <div
           className={`text-center mb-16 transition-all duration-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
@@ -49,10 +48,11 @@ const LoveStorySection = () => {
           }`}>
             Perjalanan Cinta Kami
           </p>
-          <h2 className={`font-display text-4xl md:text-5xl text-foreground mb-6 transition-all duration-700 delay-200 ${
+          <h2 className={`font-script text-5xl md:text-6xl mb-6 transition-all duration-700 delay-200 ${
             isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90"
           }`}>
-            Kisah Kami
+            <span className="text-dusty-rose">Kisah</span>{" "}
+            <span className="text-sage-green">Kami</span>
           </h2>
           <div className={`section-divider transition-all duration-500 delay-300 ${
             isVisible ? "opacity-100 w-24" : "opacity-0 w-0"
@@ -66,21 +66,21 @@ const LoveStorySection = () => {
               isVisible ? "opacity-100 translate-x-0 rotate-0" : "opacity-0 -translate-x-12 -rotate-3"
             }`}
           >
-            <div className="relative rounded-2xl overflow-hidden shadow-card touch-lift">
+            <div className="relative photo-frame photo-frame-rounded touch-lift">
               <img
                 src={coupleImage}
                 alt="Oky dan Mita"
-                className={`w-full h-[500px] object-cover transition-all duration-1000 ${
+                className={`w-full h-[450px] md:h-[500px] object-cover transition-all duration-1000 ${
                   isVisible ? "scale-100" : "scale-110"
                 }`}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-foreground/20 to-transparent" />
             </div>
             {/* Decorative Frame */}
-            <div className={`absolute -top-4 -left-4 w-24 h-24 border-t-2 border-l-2 border-warm-blush rounded-tl-2xl transition-all duration-500 delay-400 ${
+            <div className={`absolute -top-4 -left-4 w-20 h-20 border-t-2 border-l-2 border-dusty-rose rounded-tl-2xl transition-all duration-500 delay-400 ${
               isVisible ? "opacity-100 scale-100" : "opacity-0 scale-0"
             }`} />
-            <div className={`absolute -bottom-4 -right-4 w-24 h-24 border-b-2 border-r-2 border-warm-blush rounded-br-2xl transition-all duration-500 delay-500 ${
+            <div className={`absolute -bottom-4 -right-4 w-20 h-20 border-b-2 border-r-2 border-sage-green rounded-br-2xl transition-all duration-500 delay-500 ${
               isVisible ? "opacity-100 scale-100" : "opacity-0 scale-0"
             }`} />
           </div>
@@ -91,7 +91,7 @@ const LoveStorySection = () => {
               isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-12"
             }`}
           >
-            <div className="relative pl-8 border-l-2 border-soft-rose/50">
+            <div className="relative pl-8 border-l-2 border-dusty-rose/30">
               {milestones.map((milestone, index) => (
                 <div
                   key={milestone.year}
@@ -101,18 +101,22 @@ const LoveStorySection = () => {
                   style={{ transitionDelay: `${500 + index * 150}ms` }}
                 >
                   {/* Dot */}
-                  <div className={`absolute -left-[25px] w-4 h-4 bg-warm-blush rounded-full border-4 border-cream-white shadow-soft transition-all duration-300 ${
-                    isVisible ? "scale-100" : "scale-0"
-                  }`} style={{ transitionDelay: `${550 + index * 150}ms` }} />
+                  <div className={`absolute -left-[25px] w-4 h-4 rounded-full border-4 border-cream shadow-soft transition-all duration-300 ${
+                    milestone.color === "dusty-rose" ? "bg-dusty-rose" : "bg-sage-green"
+                  } ${isVisible ? "scale-100" : "scale-0"}`} 
+                  style={{ transitionDelay: `${550 + index * 150}ms` }} />
                   
                   {/* Content */}
-                  <div className="glass-card rounded-xl p-6 ml-4 touch-lift">
-                    <span className={`text-sm font-medium text-accent tracking-wider transition-all duration-300 ${
-                      isVisible ? "opacity-100" : "opacity-0"
-                    }`} style={{ transitionDelay: `${600 + index * 150}ms` }}>
+                  <div className={`glass-card rounded-xl p-6 ml-4 touch-lift ${
+                    milestone.color === "dusty-rose" ? "border-dusty-rose/20" : "border-sage-green/20"
+                  }`}>
+                    <span className={`text-sm font-medium tracking-wider font-display ${
+                      milestone.color === "dusty-rose" ? "text-dusty-rose" : "text-sage-green"
+                    } transition-all duration-300 ${isVisible ? "opacity-100" : "opacity-0"}`} 
+                    style={{ transitionDelay: `${600 + index * 150}ms` }}>
                       {milestone.year}
                     </span>
-                    <h3 className={`font-display text-2xl text-foreground mt-1 mb-2 transition-all duration-300 ${
+                    <h3 className={`font-elegant text-xl md:text-2xl text-foreground mt-1 mb-2 transition-all duration-300 ${
                       isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                     }`} style={{ transitionDelay: `${650 + index * 150}ms` }}>
                       {milestone.title}

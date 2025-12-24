@@ -3,6 +3,8 @@ import couple1 from "@/assets/couple-1.jpg";
 import couple2 from "@/assets/couple-2.jpg";
 import venue from "@/assets/venue.jpg";
 import hero from "@/assets/hero-wedding.jpg";
+import FloralDecoration from "./FloralDecoration";
+import SparklesDecoration from "./SparklesDecoration";
 
 const GallerySection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -22,15 +24,19 @@ const GallerySection = () => {
   }, []);
 
   const images = [
-    { src: couple1, alt: "Sarah dan Michael - Foto 1" },
-    { src: couple2, alt: "Sarah dan Michael - Foto 2" },
-    { src: venue, alt: "Venue pernikahan" },
-    { src: hero, alt: "Dekorasi pernikahan" },
+    { src: couple1, alt: "Oky dan Mita - Foto 1", frame: "rounded" },
+    { src: couple2, alt: "Oky dan Mita - Foto 2", frame: "arch" },
+    { src: venue, alt: "Venue pernikahan", frame: "rounded" },
+    { src: hero, alt: "Dekorasi pernikahan", frame: "circle" },
   ];
 
   return (
-    <section id="gallery-section" className="py-24 bg-cream-white">
-      <div className="container max-w-6xl mx-auto px-4">
+    <section id="gallery-section" className="py-24 bg-gradient-to-b from-cream via-blush-pink/20 to-cream relative overflow-hidden">
+      <FloralDecoration position="top-left" size="md" className="opacity-30" />
+      <FloralDecoration position="bottom-right" size="md" className="opacity-30" />
+      <SparklesDecoration count={5} />
+
+      <div className="container max-w-6xl mx-auto px-4 relative z-10">
         <div
           className={`text-center mb-16 transition-all duration-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
@@ -41,49 +47,106 @@ const GallerySection = () => {
           }`}>
             Momen Bahagia
           </p>
-          <h2 className={`font-display text-4xl md:text-5xl text-foreground mb-6 transition-all duration-700 delay-200 ${
+          <h2 className={`font-script text-5xl md:text-6xl mb-6 transition-all duration-700 delay-200 ${
             isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90"
           }`}>
-            Galeri Kami
+            <span className="text-sage-green">Galeri</span>{" "}
+            <span className="text-dusty-rose">Kami</span>
           </h2>
           <div className={`section-divider transition-all duration-500 delay-300 ${
             isVisible ? "opacity-100 w-24" : "opacity-0 w-0"
           }`} />
         </div>
 
-        <div
-          className={`grid grid-cols-2 md:grid-cols-4 gap-4 transition-all duration-700 delay-200 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-          }`}
-        >
-          {images.map((image, index) => (
-            <div
-              key={index}
-              className={`group relative overflow-hidden rounded-xl aspect-square touch-lift ${
-                index === 0 ? "md:col-span-2 md:row-span-2" : ""
-              } transition-all duration-500 ${
-                isVisible ? "opacity-100 scale-100 rotate-0" : "opacity-0 scale-90 rotate-2"
-              }`}
-              style={{ transitionDelay: `${300 + index * 100}ms` }}
-            >
+        {/* Gallery Grid - Poster Style */}
+        <div className="grid grid-cols-12 gap-4 max-w-4xl mx-auto">
+          {/* Large main image */}
+          <div className={`col-span-7 row-span-2 transition-all duration-700 delay-300 ${
+            isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-95"
+          }`}>
+            <div className="photo-frame photo-frame-rounded h-full touch-lift group">
               <img
-                src={image.src}
-                alt={image.alt}
-                className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-110 ${
-                  isVisible ? "scale-100" : "scale-125"
-                }`}
+                src={images[0].src}
+                alt={images[0].alt}
+                className="w-full h-full min-h-[350px] md:min-h-[450px] object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/20 transition-colors duration-300" />
-              <div className="absolute inset-0 border-4 border-transparent group-hover:border-cream-white/50 rounded-xl transition-all duration-300" />
-              
-              {/* Hover overlay effect */}
-              <div className={`absolute inset-0 bg-gradient-to-t from-foreground/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4`}>
-                <span className="text-cream-white text-sm font-medium opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-                  Lihat Foto
-                </span>
-              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-foreground/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>
-          ))}
+          </div>
+
+          {/* Arch frame */}
+          <div className={`col-span-5 transition-all duration-700 delay-400 ${
+            isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-95"
+          }`}>
+            <div className="photo-frame photo-frame-arch h-48 md:h-56 touch-lift group">
+              <img
+                src={images[1].src}
+                alt={images[1].alt}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+            </div>
+          </div>
+
+          {/* Square with rounded corners */}
+          <div className={`col-span-5 transition-all duration-700 delay-500 ${
+            isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-95"
+          }`}>
+            <div className="photo-frame photo-frame-rounded h-48 md:h-52 touch-lift group">
+              <img
+                src={images[2].src}
+                alt={images[2].alt}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+            </div>
+          </div>
+
+          {/* Circle frame */}
+          <div className={`col-span-4 flex justify-center items-center transition-all duration-700 delay-600 ${
+            isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-95"
+          }`}>
+            <div className="photo-frame photo-frame-circle w-28 h-28 md:w-36 md:h-36 touch-lift group">
+              <img
+                src={images[3].src}
+                alt={images[3].alt}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+            </div>
+          </div>
+
+          {/* Additional decorative photos */}
+          <div className={`col-span-4 transition-all duration-700 delay-700 ${
+            isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-95"
+          }`}>
+            <div className="photo-frame photo-frame-rounded h-32 md:h-40 touch-lift group">
+              <img
+                src={hero}
+                alt="Bouquet"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+            </div>
+          </div>
+
+          <div className={`col-span-4 transition-all duration-700 delay-800 ${
+            isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-95"
+          }`}>
+            <div className="photo-frame photo-frame-rounded h-32 md:h-40 touch-lift group">
+              <img
+                src={venue}
+                alt="Table setting"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Color palette */}
+        <div className={`flex items-center justify-center gap-3 mt-12 transition-all duration-700 delay-900 ${
+          isVisible ? "opacity-100" : "opacity-0"
+        }`}>
+          <div className="w-10 h-10 rounded-lg bg-dusty-rose shadow-sm touch-bounce" />
+          <div className="w-10 h-10 rounded-lg bg-soft-taupe shadow-sm touch-bounce" />
+          <div className="w-10 h-10 rounded-lg bg-sage-green shadow-sm touch-bounce" />
+          <div className="w-10 h-10 rounded-lg bg-olive-green shadow-sm touch-bounce" />
         </div>
       </div>
     </section>

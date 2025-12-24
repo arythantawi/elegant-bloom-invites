@@ -3,6 +3,7 @@ import { Calendar, Clock, MapPin } from "lucide-react";
 import venueImage from "@/assets/venue.jpg";
 import FloralDecoration from "./FloralDecoration";
 import SparklesDecoration from "./SparklesDecoration";
+import { FloralSide5, Floral6, Floral7 } from "./FloralDecorations";
 
 const EventSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -47,6 +48,12 @@ const EventSection = () => {
     >
       <FloralDecoration position="top-right" size="md" className="opacity-40" />
       <FloralDecoration position="bottom-left" size="md" className="opacity-40" />
+      
+      {/* New floral decorations with sway animation */}
+      <FloralSide5 position="left" size="md" className="opacity-50 top-1/4" />
+      <Floral6 position="right" size="lg" className="opacity-40 top-1/3" />
+      <Floral7 position="bottom-right" size="sm" className="opacity-45 bottom-16 right-8" />
+      
       <SparklesDecoration count={5} />
 
       <div className="container max-w-6xl mx-auto px-4 relative z-10">

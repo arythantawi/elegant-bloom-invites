@@ -1,25 +1,30 @@
-import { useState } from "react";
-import { Heart, Sparkles } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Sparkles } from "lucide-react";
 import ConfettiEffect from "./ConfettiEffect";
-import couplePrewedding from "@/assets/couple-prewedding.png";
 import FloralDecoration from "./FloralDecoration";
+
 interface EnvelopeOpeningProps {
   onOpen: () => void;
   guestName?: string;
 }
+
 const EnvelopeOpening = ({
   onOpen,
   guestName
 }: EnvelopeOpeningProps) => {
-  const [isOpening, setIsOpening] = useState(false);
   const [isFullyOpen, setIsFullyOpen] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
-  const handleOpen = () => {
-    setIsOpening(true);
-    setTimeout(() => setShowConfetti(true), 400);
-    setTimeout(() => setIsFullyOpen(true), 800);
-    setTimeout(() => onOpen(), 2500);
-  };
+
+  useEffect(() => {
+    // Auto open after 5 seconds
+    const timer = setTimeout(() => {
+      setShowConfetti(true);
+      setTimeout(() => setIsFullyOpen(true), 800);
+      setTimeout(() => onOpen(), 2500);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, [onOpen]);
   return <div className="fixed inset-0 z-[100] bg-gradient-to-b from-cream via-warm-cream to-cream flex items-center justify-center overflow-hidden">
       <ConfettiEffect isActive={showConfetti} />
       
@@ -45,13 +50,8 @@ const EnvelopeOpening = ({
 
       {/* Envelope */}
       <div className="relative" style={{
-      perspective: "1000px"
-    }}>
-        
-
-        {!isOpening && <div className="absolute -bottom-24 left-1/2 -translate-x-1/2 animate-fade-up">
-            
-          </div>}
+        perspective: "1000px"
+      }}>
       </div>
 
       {/* Header */}

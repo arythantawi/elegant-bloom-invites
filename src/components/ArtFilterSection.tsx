@@ -31,7 +31,6 @@ const ArtFilterSection = () => {
     { id: "cartoon", name: "Kartun", emoji: "🎨" },
     { id: "elegant", name: "Elegan", emoji: "✨" },
     { id: "whimsical", name: "Magical", emoji: "🦋" },
-    { id: "retro", name: "Retro", emoji: "🎶" },
   ];
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {

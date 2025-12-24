@@ -3,8 +3,36 @@ import couple1 from "@/assets/couple-1.jpg";
 import couple2 from "@/assets/couple-2.jpg";
 import venue from "@/assets/venue.jpg";
 import hero from "@/assets/hero-wedding.jpg";
+import frameGold from "@/assets/frame-gold.png";
 import FloralDecoration from "./FloralDecoration";
 import SparklesDecoration from "./SparklesDecoration";
+
+interface FramedPhotoProps {
+  src: string;
+  alt: string;
+  className?: string;
+  imageClassName?: string;
+}
+
+const FramedPhoto = ({ src, alt, className = "", imageClassName = "" }: FramedPhotoProps) => (
+  <div className={`relative touch-lift group ${className}`}>
+    {/* Photo */}
+    <div className="absolute inset-[8%] overflow-hidden rounded-sm">
+      <img
+        src={src}
+        alt={alt}
+        className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 ${imageClassName}`}
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-foreground/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+    </div>
+    {/* Gold frame overlay */}
+    <img 
+      src={frameGold} 
+      alt="Frame" 
+      className="absolute inset-0 w-full h-full object-fill pointer-events-none z-10"
+    />
+  </div>
+);
 
 const GallerySection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -24,16 +52,16 @@ const GallerySection = () => {
   }, []);
 
   const images = [
-    { src: couple1, alt: "Oky dan Mita - Foto 1", frame: "rounded" },
-    { src: couple2, alt: "Oky dan Mita - Foto 2", frame: "arch" },
-    { src: venue, alt: "Venue pernikahan", frame: "rounded" },
-    { src: hero, alt: "Dekorasi pernikahan", frame: "circle" },
+    { src: couple1, alt: "Oky dan Mita - Foto 1" },
+    { src: couple2, alt: "Oky dan Mita - Foto 2" },
+    { src: venue, alt: "Venue pernikahan" },
+    { src: hero, alt: "Dekorasi pernikahan" },
   ];
 
   return (
     <section id="gallery-section" className="py-24 bg-gradient-to-b from-cream via-blush-pink/20 to-cream relative overflow-hidden">
-      <FloralDecoration position="top-left" size="md" className="opacity-30" />
-      <FloralDecoration position="bottom-right" size="md" className="opacity-30" />
+      <FloralDecoration position="top-left" size="md" className="opacity-60" variant={1} />
+      <FloralDecoration position="bottom-right" size="md" className="opacity-60" variant={2} />
       <SparklesDecoration count={5} />
 
       <div className="container max-w-6xl mx-auto px-4 relative z-10">
@@ -58,84 +86,71 @@ const GallerySection = () => {
           }`} />
         </div>
 
-        {/* Gallery Grid - Poster Style */}
-        <div className="grid grid-cols-12 gap-4 max-w-4xl mx-auto">
+        {/* Gallery Grid with Gold Frames */}
+        <div className="grid grid-cols-12 gap-6 max-w-4xl mx-auto">
           {/* Large main image */}
           <div className={`col-span-7 row-span-2 transition-all duration-700 delay-300 ${
             isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-95"
           }`}>
-            <div className="photo-frame photo-frame-rounded h-full touch-lift group">
-              <img
-                src={images[0].src}
-                alt={images[0].alt}
-                className="w-full h-full min-h-[350px] md:min-h-[450px] object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-foreground/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </div>
+            <FramedPhoto
+              src={images[0].src}
+              alt={images[0].alt}
+              className="h-full min-h-[350px] md:min-h-[450px]"
+            />
           </div>
 
-          {/* Arch frame */}
+          {/* Second photo */}
           <div className={`col-span-5 transition-all duration-700 delay-400 ${
             isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-95"
           }`}>
-            <div className="photo-frame photo-frame-arch h-48 md:h-56 touch-lift group">
-              <img
-                src={images[1].src}
-                alt={images[1].alt}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-            </div>
+            <FramedPhoto
+              src={images[1].src}
+              alt={images[1].alt}
+              className="h-48 md:h-56"
+            />
           </div>
 
-          {/* Square with rounded corners */}
+          {/* Third photo */}
           <div className={`col-span-5 transition-all duration-700 delay-500 ${
             isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-95"
           }`}>
-            <div className="photo-frame photo-frame-rounded h-48 md:h-52 touch-lift group">
-              <img
-                src={images[2].src}
-                alt={images[2].alt}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-            </div>
+            <FramedPhoto
+              src={images[2].src}
+              alt={images[2].alt}
+              className="h-48 md:h-52"
+            />
           </div>
 
-          {/* Circle frame */}
+          {/* Fourth photo - square */}
           <div className={`col-span-4 flex justify-center items-center transition-all duration-700 delay-600 ${
             isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-95"
           }`}>
-            <div className="photo-frame photo-frame-circle w-28 h-28 md:w-36 md:h-36 touch-lift group">
-              <img
-                src={images[3].src}
-                alt={images[3].alt}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-            </div>
+            <FramedPhoto
+              src={images[3].src}
+              alt={images[3].alt}
+              className="w-32 h-32 md:w-40 md:h-40"
+            />
           </div>
 
           {/* Additional decorative photos */}
           <div className={`col-span-4 transition-all duration-700 delay-700 ${
             isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-95"
           }`}>
-            <div className="photo-frame photo-frame-rounded h-32 md:h-40 touch-lift group">
-              <img
-                src={hero}
-                alt="Bouquet"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-            </div>
+            <FramedPhoto
+              src={hero}
+              alt="Bouquet"
+              className="h-32 md:h-40"
+            />
           </div>
 
           <div className={`col-span-4 transition-all duration-700 delay-800 ${
             isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-95"
           }`}>
-            <div className="photo-frame photo-frame-rounded h-32 md:h-40 touch-lift group">
-              <img
-                src={venue}
-                alt="Table setting"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-            </div>
+            <FramedPhoto
+              src={venue}
+              alt="Table setting"
+              className="h-32 md:h-40"
+            />
           </div>
         </div>
 

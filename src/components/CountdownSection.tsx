@@ -42,9 +42,7 @@ const CountdownSection = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+        setIsVisible(entry.isIntersecting);
       },
       { threshold: 0.3 }
     );
@@ -70,39 +68,51 @@ const CountdownSection = () => {
       <div className="container max-w-4xl mx-auto px-4 text-center">
         <div
           className={`transition-all duration-700 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
           }`}
         >
-          <p className="font-display text-lg tracking-[0.2em] text-muted-foreground mb-4 uppercase">
+          <p className={`font-display text-lg tracking-[0.2em] text-muted-foreground mb-4 uppercase transition-all duration-500 delay-100 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-6"
+          }`}>
             Menuju Hari Bahagia
           </p>
-          <h2 className="font-display text-4xl md:text-5xl text-foreground mb-12">
+          <h2 className={`font-display text-4xl md:text-5xl text-foreground mb-12 transition-all duration-700 delay-200 ${
+            isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90"
+          }`}>
             Hitung Mundur
           </h2>
         </div>
 
         <div
           className={`grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 transition-all duration-700 delay-200 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
           }`}
         >
           {timeBlocks.map((block, index) => (
             <div
               key={block.label}
-              className="glass-card rounded-2xl p-6 md:p-8"
-              style={{ animationDelay: `${index * 100}ms` }}
+              className={`glass-card rounded-2xl p-6 md:p-8 touch-bounce transition-all duration-500 ${
+                isVisible ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-75 translate-y-8"
+              }`}
+              style={{ transitionDelay: `${300 + index * 100}ms` }}
             >
-              <span className="font-display text-5xl md:text-6xl lg:text-7xl font-light text-foreground block mb-2">
+              <span className={`font-display text-5xl md:text-6xl lg:text-7xl font-light text-foreground block mb-2 transition-all duration-300 ${
+                isVisible ? "scale-100" : "scale-50"
+              }`} style={{ transitionDelay: `${400 + index * 100}ms` }}>
                 {String(block.value).padStart(2, "0")}
               </span>
-              <span className="text-sm tracking-widest text-muted-foreground uppercase">
+              <span className={`text-sm tracking-widest text-muted-foreground uppercase transition-all duration-300 ${
+                isVisible ? "opacity-100" : "opacity-0"
+              }`} style={{ transitionDelay: `${500 + index * 100}ms` }}>
                 {block.label}
               </span>
             </div>
           ))}
         </div>
 
-        <div className="mt-12 section-divider" />
+        <div className={`mt-12 section-divider transition-all duration-500 delay-700 ${
+          isVisible ? "opacity-100 w-24" : "opacity-0 w-0"
+        }`} />
       </div>
     </section>
   );

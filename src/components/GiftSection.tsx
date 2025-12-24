@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Gift, Copy, Check } from "lucide-react";
 import { toast } from "sonner";
+import FloralDecoration from "./FloralDecoration";
+import SparklesDecoration from "./SparklesDecoration";
 
 const GiftSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -25,13 +27,15 @@ const GiftSection = () => {
       bank: "BCA",
       accountNumber: "1234567890",
       accountName: "Oky Dwi Prasetyo",
-      color: "from-blue-500 to-blue-600",
+      color: "dusty-rose",
+      gradient: "from-dusty-rose to-mauve",
     },
     {
       bank: "Mandiri",
       accountNumber: "0987654321",
       accountName: "Mita Berliana",
-      color: "from-yellow-500 to-yellow-600",
+      color: "sage-green",
+      gradient: "from-sage-green to-olive-green",
     },
   ];
 
@@ -45,23 +49,19 @@ const GiftSection = () => {
   return (
     <section
       id="gift-section"
-      className="py-24 bg-gradient-to-b from-cream-white via-blush-pink/30 to-cream-white relative overflow-hidden"
+      className="py-24 bg-gradient-to-b from-cream via-soft-taupe/20 to-cream relative overflow-hidden"
     >
-      {/* Decorative Background */}
-      <div className={`absolute top-1/4 left-0 w-64 h-64 bg-gradient-to-br from-soft-rose/20 to-transparent rounded-full blur-3xl transition-all duration-1000 ${
-        isVisible ? "opacity-100 scale-100" : "opacity-0 scale-50"
-      }`} />
-      <div className={`absolute bottom-1/4 right-0 w-80 h-80 bg-gradient-to-tl from-warm-blush/20 to-transparent rounded-full blur-3xl transition-all duration-1000 delay-200 ${
-        isVisible ? "opacity-100 scale-100" : "opacity-0 scale-50"
-      }`} />
+      <FloralDecoration position="top-right" size="md" className="opacity-30" />
+      <FloralDecoration position="bottom-left" size="md" className="opacity-30" />
+      <SparklesDecoration count={4} />
 
-      <div className="container max-w-4xl mx-auto px-4">
+      <div className="container max-w-4xl mx-auto px-4 relative z-10">
         <div
           className={`text-center mb-16 transition-all duration-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
           }`}
         >
-          <Gift className={`w-12 h-12 text-accent mx-auto mb-4 transition-all duration-500 delay-100 ${
+          <Gift className={`w-12 h-12 text-dusty-rose mx-auto mb-4 transition-all duration-500 delay-100 ${
             isVisible ? "opacity-100 scale-100 rotate-0" : "opacity-0 scale-50 -rotate-12"
           }`} />
           <p className={`font-display text-lg tracking-[0.2em] text-muted-foreground mb-4 uppercase transition-all duration-500 delay-200 ${
@@ -69,10 +69,11 @@ const GiftSection = () => {
           }`}>
             Kirim Hadiah
           </p>
-          <h2 className={`font-display text-4xl md:text-5xl text-foreground mb-6 transition-all duration-700 delay-300 ${
+          <h2 className={`font-script text-5xl md:text-6xl mb-6 transition-all duration-700 delay-300 ${
             isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90"
           }`}>
-            Wedding Gift
+            <span className="text-sage-green">Wedding</span>{" "}
+            <span className="text-dusty-rose">Gift</span>
           </h2>
           <div className={`section-divider mb-6 transition-all duration-500 delay-400 ${
             isVisible ? "opacity-100 w-24" : "opacity-0 w-0"
@@ -89,26 +90,27 @@ const GiftSection = () => {
             <div
               key={account.bank}
               className={`glass-card rounded-2xl p-8 text-center touch-lift transition-all duration-700 ${
-                isVisible ? "opacity-100 translate-y-0 rotate-0" : "opacity-0 translate-y-12 rotate-2"
-              }`}
+                account.color === "dusty-rose" ? "border-dusty-rose/20" : "border-sage-green/20"
+              } ${isVisible ? "opacity-100 translate-y-0 rotate-0" : "opacity-0 translate-y-12 rotate-2"}`}
               style={{ transitionDelay: `${600 + index * 150}ms` }}
             >
               {/* Bank Logo */}
-              <div className={`w-16 h-16 mx-auto mb-6 rounded-xl bg-gradient-to-br ${account.color} flex items-center justify-center shadow-lg transition-all duration-500 touch-bounce ${
+              <div className={`w-16 h-16 mx-auto mb-6 rounded-xl bg-gradient-to-br ${account.gradient} flex items-center justify-center shadow-lg transition-all duration-500 touch-bounce ${
                 isVisible ? "scale-100 rotate-0" : "scale-0 rotate-180"
               }`} style={{ transitionDelay: `${700 + index * 150}ms` }}>
-                <span className="text-white font-bold text-lg">{account.bank}</span>
+                <span className="text-cream font-bold text-lg font-display">{account.bank}</span>
               </div>
 
-              <h3 className={`font-display text-2xl text-foreground mb-4 transition-all duration-500 ${
+              <h3 className={`font-elegant text-2xl text-foreground mb-4 transition-all duration-500 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
               }`} style={{ transitionDelay: `${750 + index * 150}ms` }}>
                 {account.bank}
               </h3>
 
-              <div className={`bg-blush-pink/30 rounded-xl p-4 mb-4 transition-all duration-500 ${
-                isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90"
-              }`} style={{ transitionDelay: `${800 + index * 150}ms` }}>
+              <div className={`bg-cream/60 rounded-xl p-4 mb-4 border transition-all duration-500 ${
+                account.color === "dusty-rose" ? "border-dusty-rose/20" : "border-sage-green/20"
+              } ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90"}`} 
+              style={{ transitionDelay: `${800 + index * 150}ms` }}>
                 <p className="font-mono text-xl text-foreground tracking-wider">
                   {account.accountNumber}
                 </p>
@@ -122,14 +124,16 @@ const GiftSection = () => {
 
               <button
                 onClick={() => copyToClipboard(account.accountNumber, index)}
-                className={`inline-flex items-center gap-2 px-6 py-3 bg-warm-blush/20 hover:bg-warm-blush/40 rounded-full text-foreground text-sm font-medium touch-bounce transition-all duration-500 ${
-                  isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90"
-                }`}
+                className={`inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium touch-bounce transition-all duration-500 ${
+                  account.color === "dusty-rose" 
+                    ? "bg-dusty-rose/20 hover:bg-dusty-rose/30 text-foreground" 
+                    : "bg-sage-green/20 hover:bg-sage-green/30 text-foreground"
+                } ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90"}`}
                 style={{ transitionDelay: `${900 + index * 150}ms` }}
               >
                 {copiedIndex === index ? (
                   <>
-                    <Check className="w-4 h-4 text-green-600" />
+                    <Check className="w-4 h-4 text-sage-green" />
                     Tersalin!
                   </>
                 ) : (

@@ -4,6 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Check, Heart, Users } from "lucide-react";
+import FloralDecoration from "./FloralDecoration";
+import SparklesDecoration from "./SparklesDecoration";
 
 const RSVPSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -35,7 +37,6 @@ const RSVPSection = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate submission
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
     toast({
@@ -56,17 +57,13 @@ const RSVPSection = () => {
   return (
     <section
       id="rsvp-section"
-      className="py-24 bg-gradient-to-b from-cream-white via-soft-rose/30 to-cream-white relative"
+      className="py-24 bg-gradient-to-b from-cream via-dusty-rose/10 to-cream relative overflow-hidden"
     >
-      {/* Decorative Elements */}
-      <div className={`absolute top-20 left-10 w-40 h-40 bg-blush-pink/30 rounded-full blur-3xl transition-all duration-1000 ${
-        isVisible ? "opacity-100 scale-100" : "opacity-0 scale-50"
-      }`} />
-      <div className={`absolute bottom-20 right-10 w-60 h-60 bg-warm-blush/20 rounded-full blur-3xl transition-all duration-1000 delay-200 ${
-        isVisible ? "opacity-100 scale-100" : "opacity-0 scale-50"
-      }`} />
+      <FloralDecoration position="top-left" size="md" className="opacity-30" />
+      <FloralDecoration position="bottom-right" size="md" className="opacity-30" />
+      <SparklesDecoration count={4} />
 
-      <div className="container max-w-2xl mx-auto px-4 relative">
+      <div className="container max-w-2xl mx-auto px-4 relative z-10">
         <div
           className={`text-center mb-12 transition-all duration-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
@@ -77,10 +74,10 @@ const RSVPSection = () => {
           }`}>
             Konfirmasi Kehadiran
           </p>
-          <h2 className={`font-display text-4xl md:text-5xl text-foreground mb-6 transition-all duration-700 delay-200 ${
+          <h2 className={`font-script text-5xl md:text-6xl mb-6 transition-all duration-700 delay-200 ${
             isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90"
           }`}>
-            RSVP
+            <span className="text-dusty-rose">RSVP</span>
           </h2>
           <div className={`section-divider mb-6 transition-all duration-500 delay-300 ${
             isVisible ? "opacity-100 w-24" : "opacity-0 w-0"
@@ -94,7 +91,7 @@ const RSVPSection = () => {
 
         <form
           onSubmit={handleSubmit}
-          className={`glass-card rounded-2xl p-8 md:p-10 touch-lift transition-all duration-700 delay-200 ${
+          className={`glass-card rounded-2xl p-8 md:p-10 touch-lift border-dusty-rose/20 transition-all duration-700 delay-200 ${
             isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-12 scale-95"
           }`}
         >
@@ -103,7 +100,7 @@ const RSVPSection = () => {
             <div className={`transition-all duration-500 ${
               isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-6"
             }`} style={{ transitionDelay: "400ms" }}>
-              <label className="block text-sm font-medium text-foreground mb-2">
+              <label className="block text-sm font-medium text-foreground mb-2 font-display">
                 Nama Lengkap
               </label>
               <Input
@@ -112,7 +109,7 @@ const RSVPSection = () => {
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 placeholder="Masukkan nama Anda"
                 required
-                className="bg-card/50 border-border/50 focus:border-warm-blush focus:ring-warm-blush/20 transition-all duration-300"
+                className="bg-cream/50 border-dusty-rose/30 focus:border-dusty-rose focus:ring-dusty-rose/20 transition-all duration-300"
               />
             </div>
 
@@ -120,7 +117,7 @@ const RSVPSection = () => {
             <div className={`transition-all duration-500 ${
               isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-6"
             }`} style={{ transitionDelay: "500ms" }}>
-              <label className="block text-sm font-medium text-foreground mb-2">
+              <label className="block text-sm font-medium text-foreground mb-2 font-display">
                 Email
               </label>
               <Input
@@ -129,7 +126,7 @@ const RSVPSection = () => {
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 placeholder="email@example.com"
                 required
-                className="bg-card/50 border-border/50 focus:border-warm-blush focus:ring-warm-blush/20 transition-all duration-300"
+                className="bg-cream/50 border-dusty-rose/30 focus:border-dusty-rose focus:ring-dusty-rose/20 transition-all duration-300"
               />
             </div>
 
@@ -137,7 +134,7 @@ const RSVPSection = () => {
             <div className={`transition-all duration-500 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
             }`} style={{ transitionDelay: "600ms" }}>
-              <label className="block text-sm font-medium text-foreground mb-3">
+              <label className="block text-sm font-medium text-foreground mb-3 font-display">
                 Konfirmasi Kehadiran
               </label>
               <div className="grid grid-cols-2 gap-4">
@@ -146,24 +143,24 @@ const RSVPSection = () => {
                   onClick={() => setFormData({ ...formData, attendance: "hadir" })}
                   className={`p-4 rounded-xl border-2 transition-all duration-300 flex flex-col items-center gap-2 touch-bounce ${
                     formData.attendance === "hadir"
-                      ? "border-warm-blush bg-warm-blush/20 text-foreground scale-105"
-                      : "border-border/50 bg-card/30 text-muted-foreground hover:border-warm-blush/50 hover:scale-102"
+                      ? "border-sage-green bg-sage-green/20 text-foreground scale-105"
+                      : "border-border/50 bg-cream/30 text-muted-foreground hover:border-sage-green/50"
                   }`}
                 >
-                  <Check className="w-6 h-6" />
-                  <span className="font-medium">Ya, Hadir</span>
+                  <Check className={`w-6 h-6 ${formData.attendance === "hadir" ? "text-sage-green" : ""}`} />
+                  <span className="font-medium font-display">Ya, Hadir</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setFormData({ ...formData, attendance: "tidak" })}
                   className={`p-4 rounded-xl border-2 transition-all duration-300 flex flex-col items-center gap-2 touch-bounce ${
                     formData.attendance === "tidak"
-                      ? "border-warm-blush bg-warm-blush/20 text-foreground scale-105"
-                      : "border-border/50 bg-card/30 text-muted-foreground hover:border-warm-blush/50 hover:scale-102"
+                      ? "border-dusty-rose bg-dusty-rose/20 text-foreground scale-105"
+                      : "border-border/50 bg-cream/30 text-muted-foreground hover:border-dusty-rose/50"
                   }`}
                 >
-                  <Heart className="w-6 h-6" />
-                  <span className="font-medium">Maaf, Tidak Bisa</span>
+                  <Heart className={`w-6 h-6 ${formData.attendance === "tidak" ? "text-dusty-rose" : ""}`} />
+                  <span className="font-medium font-display">Maaf, Tidak Bisa</span>
                 </button>
               </div>
             </div>
@@ -171,14 +168,14 @@ const RSVPSection = () => {
             {/* Number of Guests */}
             {formData.attendance === "hadir" && (
               <div className="animate-fade-in transition-all duration-500">
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  <Users className="w-4 h-4 inline mr-2" />
+                <label className="block text-sm font-medium text-foreground mb-2 font-display">
+                  <Users className="w-4 h-4 inline mr-2 text-sage-green" />
                   Jumlah Tamu
                 </label>
                 <select
                   value={formData.guests}
                   onChange={(e) => setFormData({ ...formData, guests: e.target.value })}
-                  className="w-full p-3 rounded-lg bg-card/50 border border-border/50 focus:border-warm-blush focus:ring-warm-blush/20 focus:outline-none transition-all duration-300"
+                  className="w-full p-3 rounded-lg bg-cream/50 border border-sage-green/30 focus:border-sage-green focus:ring-sage-green/20 focus:outline-none transition-all duration-300"
                 >
                   <option value="1">1 Orang</option>
                   <option value="2">2 Orang</option>
@@ -192,7 +189,7 @@ const RSVPSection = () => {
             <div className={`transition-all duration-500 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
             }`} style={{ transitionDelay: "700ms" }}>
-              <label className="block text-sm font-medium text-foreground mb-2">
+              <label className="block text-sm font-medium text-foreground mb-2 font-display">
                 Ucapan & Doa
               </label>
               <Textarea
@@ -200,7 +197,7 @@ const RSVPSection = () => {
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 placeholder="Tulis ucapan dan doa untuk kedua mempelai..."
                 rows={4}
-                className="bg-card/50 border-border/50 focus:border-warm-blush focus:ring-warm-blush/20 resize-none transition-all duration-300"
+                className="bg-cream/50 border-dusty-rose/30 focus:border-dusty-rose focus:ring-dusty-rose/20 resize-none transition-all duration-300"
               />
             </div>
 
@@ -208,18 +205,18 @@ const RSVPSection = () => {
             <Button
               type="submit"
               disabled={isSubmitting || !formData.attendance}
-              className={`w-full py-6 bg-warm-blush hover:bg-accent text-foreground font-medium text-lg rounded-xl touch-bounce transition-all duration-500 disabled:opacity-50 ${
+              className={`w-full py-6 bg-gradient-to-r from-dusty-rose to-mauve hover:from-dusty-rose/90 hover:to-mauve/90 text-cream font-medium text-lg rounded-xl touch-bounce transition-all duration-500 disabled:opacity-50 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
               }`}
               style={{ transitionDelay: "800ms" }}
             >
               {isSubmitting ? (
                 <span className="flex items-center gap-2">
-                  <div className="w-5 h-5 border-2 border-foreground/30 border-t-foreground rounded-full animate-spin" />
+                  <div className="w-5 h-5 border-2 border-cream/30 border-t-cream rounded-full animate-spin" />
                   Mengirim...
                 </span>
               ) : (
-                <span className="flex items-center gap-2">
+                <span className="flex items-center gap-2 font-display">
                   <Heart className="w-5 h-5" />
                   Kirim RSVP
                 </span>

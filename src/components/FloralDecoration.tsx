@@ -87,6 +87,10 @@ const FloralDecoration = ({
     }
   };
 
+  // Check if current image is floral1 (Color_Fill_1c.png) to apply sway animation
+  const currentImage = getFloralImage();
+  const shouldSway = currentImage === floral1;
+
   const parallaxStyle = enableParallax ? {
     transform: `${baseTransforms[position]} translateY(${parallax.y}px) rotate(${parallax.rotate}deg)`,
     transition: "transform 0.1s ease-out"
@@ -100,9 +104,10 @@ const FloralDecoration = ({
       style={parallaxStyle}
     >
       <img 
-        src={getFloralImage()} 
+        src={currentImage} 
         alt="Floral decoration" 
-        className="w-full h-full object-contain"
+        className={`w-full h-full object-contain ${shouldSway ? 'animate-sway' : ''}`}
+        style={{ transformOrigin: 'bottom center' }}
       />
     </div>
   );

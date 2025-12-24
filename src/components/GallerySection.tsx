@@ -18,20 +18,7 @@ const FramedPhoto = ({
   className = "",
   imageClassName = ""
 }: FramedPhotoProps) => {
-  return (
-    <div className={`relative ${className}`}>
-      <img 
-        src={frameGold} 
-        alt="Frame" 
-        className="absolute inset-0 w-full h-full object-contain z-10 pointer-events-none"
-      />
-      <img 
-        src={src} 
-        alt={alt} 
-        className={`absolute inset-3 w-[calc(100%-1.5rem)] h-[calc(100%-1.5rem)] object-cover rounded-sm ${imageClassName}`}
-      />
-    </div>
-  );
+  return;
 };
 const GallerySection = () => {
   const [isVisible, setIsVisible] = useState(false);

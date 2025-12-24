@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
@@ -11,43 +10,28 @@ import ArtFilterSection from "@/components/ArtFilterSection";
 import GiftSection from "@/components/GiftSection";
 import RSVPSection from "@/components/RSVPSection";
 import FooterSection from "@/components/FooterSection";
-import EnvelopeOpening from "@/components/EnvelopeOpening";
 import MusicPlayer from "@/components/MusicPlayer";
 
 const Index = () => {
-  const [isEnvelopeOpened, setIsEnvelopeOpened] = useState(false);
   const [searchParams] = useSearchParams();
   
   const guestName = searchParams.get("to")?.replace(/_/g, " ") || undefined;
 
   return (
-    <>
-      {!isEnvelopeOpened && (
-        <EnvelopeOpening 
-          onOpen={() => setIsEnvelopeOpened(true)} 
-          guestName={guestName}
-        />
-      )}
-      
-      <main
-        className={`min-h-screen bg-cream transition-opacity duration-700 ${
-          isEnvelopeOpened ? "opacity-100" : "opacity-0"
-        }`}
-      >
-        <Navigation />
-        <HeroSection guestName={guestName} />
-        <CoupleSection />
-        <CountdownSection />
-        <LoveStorySection />
-        <EventSection />
-        <GallerySection />
-        <ArtFilterSection />
-        <GiftSection />
-        <RSVPSection />
-        <FooterSection />
-        {isEnvelopeOpened && <MusicPlayer />}
-      </main>
-    </>
+    <main className="min-h-screen bg-cream">
+      <Navigation />
+      <HeroSection guestName={guestName} />
+      <CoupleSection />
+      <CountdownSection />
+      <LoveStorySection />
+      <EventSection />
+      <GallerySection />
+      <ArtFilterSection />
+      <GiftSection />
+      <RSVPSection />
+      <FooterSection />
+      <MusicPlayer />
+    </main>
   );
 };
 

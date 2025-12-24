@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Heart } from "lucide-react";
+import { Heart, Sparkles } from "lucide-react";
 import ConfettiEffect from "./ConfettiEffect";
+import couplePrewedding from "@/assets/couple-prewedding.png";
 
 interface EnvelopeOpeningProps {
   onOpen: () => void;
@@ -34,17 +35,42 @@ const EnvelopeOpening = ({ onOpen }: EnvelopeOpeningProps) => {
     <div className="fixed inset-0 z-[100] bg-gradient-to-b from-blush-pink via-soft-rose/50 to-cream-white flex items-center justify-center overflow-hidden">
       {/* Confetti Effect */}
       <ConfettiEffect isActive={showConfetti} />
+      
+      {/* Background Photo with overlay */}
+      <div className="absolute inset-0">
+        <img 
+          src={couplePrewedding} 
+          alt="Couple Prewedding" 
+          className="w-full h-full object-cover opacity-40 animate-scale-in"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-cream-white/60 via-blush-pink/40 to-cream-white/80" />
+      </div>
+      
       {/* Decorative Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-10 left-10 w-32 h-32 bg-warm-blush/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-20 right-10 w-40 h-40 bg-soft-rose/30 rounded-full blur-3xl animate-pulse delay-300" />
-        <div className="absolute top-1/3 right-1/4 w-24 h-24 bg-blush-pink/40 rounded-full blur-2xl animate-float" />
+        <div className="absolute top-10 left-10 w-32 h-32 bg-warm-blush/30 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-20 right-10 w-40 h-40 bg-soft-rose/40 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '0.3s' }} />
+        <div className="absolute top-1/3 right-1/4 w-24 h-24 bg-blush-pink/50 rounded-full blur-2xl animate-float" />
+        
+        {/* Sparkle decorations */}
+        {[...Array(8)].map((_, i) => (
+          <Sparkles
+            key={`sparkle-${i}`}
+            className="absolute text-warm-blush/50 animate-twinkle"
+            style={{
+              left: `${5 + i * 12}%`,
+              top: `${10 + (i % 4) * 22}%`,
+              width: `${14 + (i % 3) * 6}px`,
+              animationDelay: `${i * 0.3}s`,
+            }}
+          />
+        ))}
         
         {/* Floating Hearts */}
         {[...Array(6)].map((_, i) => (
           <Heart
             key={i}
-            className="absolute text-warm-blush/30 animate-float"
+            className="absolute text-warm-blush/40 animate-float"
             style={{
               left: `${10 + i * 15}%`,
               top: `${20 + (i % 3) * 25}%`,
@@ -162,8 +188,17 @@ const EnvelopeOpening = ({ onOpen }: EnvelopeOpeningProps) => {
         )}
       </div>
 
+      {/* Couple names header */}
+      <div className="absolute top-8 left-0 right-0 text-center animate-fade-up">
+        <p className="text-xs tracking-[0.3em] text-muted-foreground uppercase mb-1">The Wedding of</p>
+        <h1 className="font-display text-3xl md:text-4xl text-foreground animate-shimmer">
+          Sarah & Michael
+        </h1>
+        <p className="mt-2 text-sm text-muted-foreground tracking-wide">14 Februari 2025</p>
+      </div>
+
       {/* Names text at bottom */}
-      <div className="absolute bottom-8 left-0 right-0 text-center">
+      <div className="absolute bottom-8 left-0 right-0 text-center animate-fade-up" style={{ animationDelay: '0.5s' }}>
         <p className="text-sm text-muted-foreground tracking-widest">
           Untuk: <span className="font-medium text-foreground">Tamu Undangan</span>
         </p>

@@ -2,6 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -9,76 +10,87 @@
 
 @layer base {
   :root {
-    /* New Wedding Color Palette - Dusty Rose & Sage */
-    --dusty-rose: 10 35% 72%;
-    --sage-green: 100 20% 50%;
-    --olive-green: 80 25% 42%;
-    --cream: 40 50% 96%;
-    --warm-cream: 35 60% 94%;
-    --soft-taupe: 25 20% 85%;
-    --blush-pink: 10 40% 85%;
-    --mauve: 350 25% 70%;
+    /* Javanese Wedding Color Palette - Burgundy/Mauve Theme */
+    --burgundy: 345 45% 35%;
+    --burgundy-dark: 345 50% 28%;
+    --burgundy-light: 345 40% 45%;
+    --mauve: 340 35% 55%;
+    --mauve-light: 340 30% 70%;
+    --dusty-pink: 350 30% 80%;
+    --cream: 35 40% 92%;
+    --warm-cream: 30 35% 88%;
+    --soft-beige: 30 25% 85%;
+    --gold-accent: 40 60% 55%;
+    
+    /* Tropical/Floral accents */
+    --turquoise: 175 45% 50%;
+    --sage-green: 150 25% 55%;
+    --coral: 15 60% 65%;
 
     /* Semantic Colors */
-    --background: 40 40% 97%;
-    --foreground: 25 30% 25%;
+    --background: 35 35% 94%;
+    --foreground: 345 40% 25%;
 
-    --card: 40 50% 98%;
-    --card-foreground: 25 30% 25%;
+    --card: 35 40% 96%;
+    --card-foreground: 345 40% 25%;
 
-    --popover: 40 40% 95%;
-    --popover-foreground: 25 30% 25%;
+    --popover: 35 35% 92%;
+    --popover-foreground: 345 40% 25%;
 
-    --primary: 10 35% 65%;
-    --primary-foreground: 40 50% 98%;
+    --primary: 345 45% 35%;
+    --primary-foreground: 35 40% 96%;
 
-    --secondary: 100 20% 45%;
-    --secondary-foreground: 40 50% 98%;
+    --secondary: 340 35% 55%;
+    --secondary-foreground: 35 40% 96%;
 
-    --muted: 35 30% 88%;
-    --muted-foreground: 25 20% 45%;
+    --muted: 30 25% 85%;
+    --muted-foreground: 345 25% 45%;
 
-    --accent: 100 25% 55%;
-    --accent-foreground: 40 50% 98%;
+    --accent: 340 30% 70%;
+    --accent-foreground: 345 45% 25%;
 
     --destructive: 0 72% 50%;
     --destructive-foreground: 0 85% 97%;
 
-    --border: 35 25% 85%;
-    --input: 35 25% 85%;
-    --ring: 10 35% 65%;
+    --border: 340 20% 80%;
+    --input: 340 20% 80%;
+    --ring: 345 45% 35%;
 
     --radius: 1rem;
 
     /* Gradients */
     --gradient-hero: linear-gradient(180deg, hsl(var(--cream)) 0%, hsl(var(--warm-cream)) 50%, hsl(var(--cream)) 100%);
-    --gradient-soft: linear-gradient(135deg, hsl(var(--dusty-rose) / 0.2) 0%, hsl(var(--sage-green) / 0.15) 100%);
-    --gradient-card: linear-gradient(180deg, hsl(var(--cream)) 0%, hsl(var(--blush-pink) / 0.2) 100%);
+    --gradient-burgundy: linear-gradient(135deg, hsl(var(--burgundy)) 0%, hsl(var(--burgundy-dark)) 100%);
+    --gradient-mauve: linear-gradient(135deg, hsl(var(--mauve)) 0%, hsl(var(--burgundy-light)) 100%);
+    --gradient-soft: linear-gradient(135deg, hsl(var(--dusty-pink) / 0.3) 0%, hsl(var(--mauve-light) / 0.2) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(var(--cream)) 0%, hsl(var(--dusty-pink) / 0.3) 100%);
 
     /* Shadows */
-    --shadow-soft: 0 4px 30px hsl(var(--dusty-rose) / 0.15);
-    --shadow-card: 0 10px 40px hsl(var(--mauve) / 0.12);
-    --shadow-glow: 0 0 60px hsl(var(--dusty-rose) / 0.25);
+    --shadow-soft: 0 4px 30px hsl(var(--burgundy) / 0.15);
+    --shadow-card: 0 10px 40px hsl(var(--mauve) / 0.15);
+    --shadow-glow: 0 0 60px hsl(var(--burgundy) / 0.25);
+    --shadow-burgundy: 0 8px 32px hsl(var(--burgundy) / 0.3);
 
-    --chart-1: 10 35% 72%;
-    --chart-2: 100 20% 50%;
-    --chart-3: 80 25% 42%;
-    --chart-4: 350 25% 70%;
-    --chart-5: 25 20% 85%;
+    --chart-1: 345 45% 35%;
+    --chart-2: 340 35% 55%;
+    --chart-3: 175 45% 50%;
+    --chart-4: 40 60% 55%;
+    --chart-5: 30 25% 85%;
 
-    --sidebar: 40 50% 98%;
-    --sidebar-foreground: 25 30% 25%;
-    --sidebar-primary: 10 35% 65%;
-    --sidebar-primary-foreground: 40 50% 98%;
-    --sidebar-accent: 100 20% 45%;
-    --sidebar-accent-foreground: 40 50% 98%;
-    --sidebar-border: 35 25% 85%;
-    --sidebar-ring: 10 35% 65%;
+    --sidebar: 35 40% 96%;
+    --sidebar-foreground: 345 40% 25%;
+    --sidebar-primary: 345 45% 35%;
+    --sidebar-primary-foreground: 35 40% 96%;
+    --sidebar-accent: 340 35% 55%;
+    --sidebar-accent-foreground: 35 40% 96%;
+    --sidebar-border: 340 20% 80%;
+    --sidebar-ring: 345 45% 35%;
 
     --font-sans: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
     --font-serif: 'Playfair Display', ui-serif, Georgia, serif;
     --font-script: 'Great Vibes', cursive;
     --font-display: 'Cormorant Garamond', serif;
+    --font-brush: 'Alex Brush', cursive;
 
     --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.03);
     --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.04);
@@ -93,38 +105,38 @@
   }
 
   .dark {
-    --background: 25 20% 12%;
-    --foreground: 40 40% 95%;
-    --card: 25 18% 16%;
-    --card-foreground: 40 40% 95%;
-    --popover: 25 20% 18%;
-    --popover-foreground: 40 40% 95%;
-    --primary: 10 40% 68%;
-    --primary-foreground: 25 30% 15%;
-    --secondary: 100 25% 40%;
-    --secondary-foreground: 40 50% 98%;
-    --muted: 25 15% 30%;
-    --muted-foreground: 35 20% 75%;
-    --accent: 100 20% 35%;
-    --accent-foreground: 40 50% 95%;
-    --border: 25 15% 25%;
-    --input: 25 15% 25%;
-    --ring: 10 40% 68%;
+    --background: 345 30% 12%;
+    --foreground: 35 35% 95%;
+    --card: 345 25% 16%;
+    --card-foreground: 35 35% 95%;
+    --popover: 345 30% 18%;
+    --popover-foreground: 35 35% 95%;
+    --primary: 345 50% 60%;
+    --primary-foreground: 345 30% 15%;
+    --secondary: 340 40% 50%;
+    --secondary-foreground: 35 40% 98%;
+    --muted: 345 20% 30%;
+    --muted-foreground: 35 25% 75%;
+    --accent: 340 35% 45%;
+    --accent-foreground: 35 40% 95%;
+    --border: 345 20% 25%;
+    --input: 345 20% 25%;
+    --ring: 345 50% 60%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 85% 97%;
-    --chart-1: 10 40% 75%;
-    --chart-2: 100 25% 55%;
-    --chart-3: 10 35% 65%;
-    --chart-4: 350 30% 65%;
-    --chart-5: 25 20% 50%;
-    --sidebar: 25 18% 16%;
-    --sidebar-foreground: 40 40% 95%;
-    --sidebar-primary: 10 40% 68%;
-    --sidebar-primary-foreground: 25 30% 15%;
-    --sidebar-accent: 100 25% 45%;
-    --sidebar-accent-foreground: 40 50% 95%;
-    --sidebar-border: 25 15% 25%;
-    --sidebar-ring: 10 40% 68%;
+    --chart-1: 345 50% 70%;
+    --chart-2: 340 40% 60%;
+    --chart-3: 175 50% 55%;
+    --chart-4: 40 65% 60%;
+    --chart-5: 30 30% 55%;
+    --sidebar: 345 25% 16%;
+    --sidebar-foreground: 35 35% 95%;
+    --sidebar-primary: 345 50% 60%;
+    --sidebar-primary-foreground: 345 30% 15%;
+    --sidebar-accent: 340 40% 50%;
+    --sidebar-accent-foreground: 35 40% 95%;
+    --sidebar-border: 345 20% 25%;
+    --sidebar-ring: 345 50% 60%;
     --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
     --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
     --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
@@ -164,20 +176,32 @@
     font-family: 'Playfair Display', serif;
   }
 
+  .font-brush {
+    font-family: 'Alex Brush', cursive;
+  }
+
   .text-gradient {
     @apply bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent;
   }
 
-  .text-dusty-rose {
-    color: hsl(var(--dusty-rose));
+  .text-burgundy {
+    color: hsl(var(--burgundy));
   }
 
-  .text-sage {
-    color: hsl(var(--sage-green));
+  .text-mauve {
+    color: hsl(var(--mauve));
   }
 
   .bg-cream {
     background-color: hsl(var(--cream));
+  }
+
+  .bg-burgundy {
+    background-color: hsl(var(--burgundy));
+  }
+
+  .bg-mauve {
+    background-color: hsl(var(--mauve));
   }
 
   .glass-card {
@@ -191,6 +215,27 @@
 
   .ornament {
     @apply text-primary/60;
+  }
+
+  /* Javanese ornate frame styles */
+  .ornate-frame {
+    position: relative;
+    border: 4px solid hsl(var(--burgundy));
+    background: linear-gradient(180deg, hsl(var(--cream)) 0%, hsl(var(--dusty-pink) / 0.3) 100%);
+  }
+
+  .ornate-frame::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border: 2px solid hsl(var(--burgundy) / 0.5);
+  }
+
+  /* Oval portrait frame */
+  .portrait-frame {
+    @apply relative;
+    border: 6px solid hsl(var(--burgundy));
+    box-shadow: 0 0 0 4px hsl(var(--gold-accent) / 0.3), var(--shadow-burgundy);
   }
 
   /* Floral decorative pattern */
@@ -227,8 +272,8 @@
   /* Photo frame styles */
   .photo-frame {
     @apply relative overflow-hidden shadow-card;
-    border: 3px solid hsl(var(--cream));
-    box-shadow: 0 4px 20px hsl(var(--dusty-rose) / 0.15);
+    border: 4px solid hsl(var(--burgundy) / 0.6);
+    box-shadow: 0 4px 20px hsl(var(--burgundy) / 0.2);
   }
 
   .photo-frame-arch {
@@ -236,16 +281,48 @@
   }
 
   .photo-frame-rounded {
-    @apply rounded-2xl;
+    @apply rounded-xl;
   }
 
   .photo-frame-circle {
     @apply rounded-full;
   }
 
+  .photo-frame-oval {
+    border-radius: 50%;
+    aspect-ratio: 3/4;
+  }
+
+  /* Temple silhouette backdrop */
+  .temple-backdrop {
+    background: 
+      linear-gradient(to bottom, transparent 0%, hsl(var(--burgundy) / 0.1) 100%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'%3E%3Cpath d='M0 200 L0 150 L50 150 L50 120 L75 100 L100 120 L100 150 L150 150 L150 100 L175 80 L200 60 L225 80 L250 100 L250 150 L300 150 L300 120 L325 100 L350 120 L350 150 L400 150 L400 200 Z' fill='%238B4557' opacity='0.15'/%3E%3C/svg%3E") no-repeat center bottom;
+    background-size: 100% auto;
+  }
+
+  /* Baroque ornament border */
+  .baroque-border {
+    border-image: linear-gradient(135deg, hsl(var(--burgundy)), hsl(var(--gold-accent)), hsl(var(--burgundy))) 1;
+    border-width: 3px;
+    border-style: solid;
+  }
+
   /* Star/sparkle decoration */
   .sparkle {
     @apply text-primary/40;
+  }
+
+  /* Button styles for Javanese theme */
+  .btn-burgundy {
+    @apply px-8 py-4 font-medium rounded-full shadow-md transition-all duration-300;
+    background: linear-gradient(135deg, hsl(var(--burgundy)) 0%, hsl(var(--burgundy-dark)) 100%);
+    color: hsl(var(--cream));
+  }
+
+  .btn-burgundy:hover {
+    box-shadow: var(--shadow-burgundy);
+    transform: translateY(-2px);
   }
 }
 

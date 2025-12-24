@@ -24,17 +24,17 @@ const EventSection = () => {
   const events = [
     {
       title: "Akad Nikah",
-      date: "14 Februari 2025",
-      time: "10:00 WIB",
-      location: "Grand Ballroom, Hotel Mulia",
-      address: "Jl. Asia Afrika No. 8, Senayan, Jakarta",
+      date: "16 Januari 2026",
+      time: "07:00 WIB",
+      location: "Kediaman Mempelai Wanita",
+      address: "Pd. Kobong, Kedungrejo, Kec. Rowokangkung, Kabupaten Lumajang, Jawa Timur",
     },
     {
       title: "Resepsi",
-      date: "14 Februari 2025",
-      time: "18:00 WIB",
-      location: "Garden Pavilion, Hotel Mulia",
-      address: "Jl. Asia Afrika No. 8, Senayan, Jakarta",
+      date: "17 Januari 2026",
+      time: "13:00 WIB",
+      location: "Kediaman Mempelai Wanita",
+      address: "Pd. Kobong, Kedungrejo, Kec. Rowokangkung, Kabupaten Lumajang, Jawa Timur",
     },
   ];
 
@@ -73,7 +73,7 @@ const EventSection = () => {
             <div className="absolute inset-0 bg-gradient-to-t from-foreground/40 via-transparent to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-8 text-center">
               <p className="font-display text-2xl md:text-3xl text-cream-white">
-                Hotel Mulia Senayan
+                Rowokangkung, Lumajang
               </p>
             </div>
           </div>
@@ -120,7 +120,7 @@ const EventSection = () => {
 
               {/* Map Button */}
               <a
-                href="https://maps.google.com/?q=Hotel+Mulia+Senayan+Jakarta"
+                href="https://maps.google.com/?q=Q8F6+5XG,+Pd.+Kobong,+Kedungrejo,+Rowokangkung,+Lumajang"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 mt-6 px-6 py-3 bg-warm-blush/20 hover:bg-warm-blush/30 rounded-full text-foreground text-sm font-medium transition-colors duration-300"

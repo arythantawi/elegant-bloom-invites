@@ -2,9 +2,6 @@ import { useEffect, useState } from "react";
 import FloralDecoration from "./FloralDecoration";
 import SparklesDecoration from "./SparklesDecoration";
 import frameGold from "@/assets/frame-gold.png";
-import leafDecor1 from "@/assets/leaf-decor-1.png";
-import leafDecor2 from "@/assets/leaf-decor-2.png";
-import leafDecor3 from "@/assets/leaf-decor-3.png";
 
 const CoupleSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -62,27 +59,7 @@ const CoupleSection = () => {
               isVisible ? "opacity-100 translate-x-0 rotate-0" : "opacity-0 -translate-x-12 -rotate-3"
             }`}
           >
-            <div className="glass-card rounded-2xl p-8 touch-lift border-dusty-rose/20 relative overflow-hidden">
-              {/* Decorative leaves */}
-              <img 
-                src={leafDecor1} 
-                alt="" 
-                className="absolute -top-4 -left-4 w-20 h-20 object-contain opacity-70 pointer-events-none"
-                style={{ animation: 'sway 4s ease-in-out infinite' }}
-              />
-              <img 
-                src={leafDecor2} 
-                alt="" 
-                className="absolute -top-2 -right-4 w-16 h-16 object-contain opacity-60 pointer-events-none"
-                style={{ animation: 'swayReverse 3.5s ease-in-out infinite' }}
-              />
-              <img 
-                src={leafDecor3} 
-                alt="" 
-                className="absolute -bottom-4 -right-2 w-18 h-18 object-contain opacity-50 pointer-events-none"
-                style={{ animation: 'sway 5s ease-in-out infinite 0.5s' }}
-              />
-
+            <div className="glass-card rounded-2xl p-8 touch-lift border-dusty-rose/20">
               <div className={`relative w-32 h-40 mx-auto mb-6 transition-all duration-500 delay-400 ${
                 isVisible ? "scale-100 rotate-0" : "scale-0 rotate-180"
               }`}>
@@ -117,27 +94,7 @@ const CoupleSection = () => {
               isVisible ? "opacity-100 translate-x-0 rotate-0" : "opacity-0 translate-x-12 rotate-3"
             }`}
           >
-            <div className="glass-card rounded-2xl p-8 touch-lift border-sage-green/20 relative overflow-hidden">
-              {/* Decorative leaves */}
-              <img 
-                src={leafDecor2} 
-                alt="" 
-                className="absolute -top-4 -right-4 w-20 h-20 object-contain opacity-70 pointer-events-none"
-                style={{ animation: 'swayReverse 4s ease-in-out infinite' }}
-              />
-              <img 
-                src={leafDecor1} 
-                alt="" 
-                className="absolute -top-2 -left-4 w-16 h-16 object-contain opacity-60 pointer-events-none"
-                style={{ animation: 'sway 3.5s ease-in-out infinite' }}
-              />
-              <img 
-                src={leafDecor3} 
-                alt="" 
-                className="absolute -bottom-4 -left-2 w-18 h-18 object-contain opacity-50 pointer-events-none"
-                style={{ animation: 'swayReverse 5s ease-in-out infinite 0.5s' }}
-              />
-
+            <div className="glass-card rounded-2xl p-8 touch-lift border-sage-green/20">
               <div className={`relative w-32 h-40 mx-auto mb-6 transition-all duration-500 delay-600 ${
                 isVisible ? "scale-100 rotate-0" : "scale-0 -rotate-180"
               }`}>

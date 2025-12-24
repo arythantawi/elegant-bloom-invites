@@ -7,7 +7,7 @@ import CountdownSection from "@/components/CountdownSection";
 import LoveStorySection from "@/components/LoveStorySection";
 import EventSection from "@/components/EventSection";
 import GallerySection from "@/components/GallerySection";
-import CaricatureSection from "@/components/CaricatureSection";
+import ArtFilterSection from "@/components/ArtFilterSection";
 import GiftSection from "@/components/GiftSection";
 import RSVPSection from "@/components/RSVPSection";
 import FooterSection from "@/components/FooterSection";
@@ -42,7 +42,7 @@ const Index = () => {
         <LoveStorySection />
         <EventSection />
         <GallerySection />
-        <CaricatureSection />
+        <ArtFilterSection />
         <GiftSection />
         <RSVPSection />
         <FooterSection />

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import FloralDecoration from "./FloralDecoration";
 
 interface TimeLeft {
   days: number;
@@ -63,9 +64,12 @@ const CountdownSection = () => {
   return (
     <section
       id="countdown-section"
-      className="py-24 bg-gradient-to-b from-cream-white via-blush-pink/30 to-cream-white"
+      className="py-24 bg-gradient-to-b from-cream via-blush-pink/20 to-cream relative overflow-hidden"
     >
-      <div className="container max-w-4xl mx-auto px-4 text-center">
+      <FloralDecoration position="top-left" size="sm" className="opacity-30" />
+      <FloralDecoration position="bottom-right" size="sm" className="opacity-30" />
+
+      <div className="container max-w-4xl mx-auto px-4 text-center relative z-10">
         <div
           className={`transition-all duration-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
@@ -76,10 +80,10 @@ const CountdownSection = () => {
           }`}>
             Menuju Hari Bahagia
           </p>
-          <h2 className={`font-display text-4xl md:text-5xl text-foreground mb-12 transition-all duration-700 delay-200 ${
+          <h2 className={`font-script text-5xl md:text-6xl mb-12 transition-all duration-700 delay-200 ${
             isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90"
           }`}>
-            Hitung Mundur
+            <span className="text-sage-green">Hitung Mundur</span>
           </h2>
         </div>
 
@@ -91,17 +95,17 @@ const CountdownSection = () => {
           {timeBlocks.map((block, index) => (
             <div
               key={block.label}
-              className={`glass-card rounded-2xl p-6 md:p-8 touch-bounce transition-all duration-500 ${
+              className={`glass-card rounded-2xl p-6 md:p-8 touch-bounce border-dusty-rose/20 transition-all duration-500 ${
                 isVisible ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-75 translate-y-8"
               }`}
               style={{ transitionDelay: `${300 + index * 100}ms` }}
             >
-              <span className={`font-display text-5xl md:text-6xl lg:text-7xl font-light text-foreground block mb-2 transition-all duration-300 ${
+              <span className={`font-elegant text-4xl md:text-5xl lg:text-6xl font-light text-dusty-rose block mb-2 transition-all duration-300 ${
                 isVisible ? "scale-100" : "scale-50"
               }`} style={{ transitionDelay: `${400 + index * 100}ms` }}>
                 {String(block.value).padStart(2, "0")}
               </span>
-              <span className={`text-sm tracking-widest text-muted-foreground uppercase transition-all duration-300 ${
+              <span className={`text-sm tracking-widest text-muted-foreground uppercase font-display transition-all duration-300 ${
                 isVisible ? "opacity-100" : "opacity-0"
               }`} style={{ transitionDelay: `${500 + index * 100}ms` }}>
                 {block.label}

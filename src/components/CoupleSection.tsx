@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import FloralDecoration from "./FloralDecoration";
 import SparklesDecoration from "./SparklesDecoration";
-import frameGold from "@/assets/frame-gold.png";
 import floralSide1 from "@/assets/floral-side-1.png";
 import floralSide2 from "@/assets/floral-side-2.png";
 import floralSide3 from "@/assets/floral-side-3.png";
@@ -82,15 +81,10 @@ const CoupleSection = () => {
             />
 
             <div className="glass-card rounded-2xl p-8 touch-lift border-dusty-rose/20">
-              <div className={`relative w-32 h-40 mx-auto mb-6 transition-all duration-500 delay-400 ${
+              <div className={`relative w-28 h-28 mx-auto mb-6 rounded-full overflow-hidden border-4 border-dusty-rose/30 shadow-card transition-all duration-500 delay-400 ${
                 isVisible ? "scale-100 rotate-0" : "scale-0 rotate-180"
               }`}>
-                <img 
-                  src={frameGold} 
-                  alt="Frame" 
-                  className="absolute inset-0 w-full h-full object-contain z-10 pointer-events-none"
-                />
-                <div className="absolute inset-3 rounded-[50%] bg-gradient-to-br from-dusty-rose to-mauve flex items-center justify-center">
+                <div className="w-full h-full bg-gradient-to-br from-dusty-rose to-mauve flex items-center justify-center">
                   <span className="font-script text-4xl text-cream">O</span>
                 </div>
               </div>
@@ -136,15 +130,10 @@ const CoupleSection = () => {
             />
 
             <div className="glass-card rounded-2xl p-8 touch-lift border-sage-green/20">
-              <div className={`relative w-32 h-40 mx-auto mb-6 transition-all duration-500 delay-600 ${
+              <div className={`relative w-28 h-28 mx-auto mb-6 rounded-full overflow-hidden border-4 border-sage-green/30 shadow-card transition-all duration-500 delay-600 ${
                 isVisible ? "scale-100 rotate-0" : "scale-0 -rotate-180"
               }`}>
-                <img 
-                  src={frameGold} 
-                  alt="Frame" 
-                  className="absolute inset-0 w-full h-full object-contain z-10 pointer-events-none"
-                />
-                <div className="absolute inset-3 rounded-[50%] bg-gradient-to-br from-sage-green to-olive-green flex items-center justify-center">
+                <div className="w-full h-full bg-gradient-to-br from-sage-green to-olive-green flex items-center justify-center">
                   <span className="font-script text-4xl text-cream">M</span>
                 </div>
               </div>

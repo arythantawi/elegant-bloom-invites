@@ -3,9 +3,12 @@ import heroImage from "@/assets/hero-wedding.jpg";
 import coupleImage from "@/assets/couple-1.jpg";
 import FloralDecoration from "./FloralDecoration";
 import SparklesDecoration from "./SparklesDecoration";
+import { FloralSide4, Floral5, FloralSide5, Floral6, FloralExposure, GoldenFloral, FloralSide6, Floral7 } from "./FloralDecorations";
+
 interface HeroSectionProps {
   guestName?: string;
 }
+
 const HeroSection = ({
   guestName
 }: HeroSectionProps) => {
@@ -24,11 +27,17 @@ const HeroSection = ({
                           radial-gradient(circle at 60% 80%, hsl(10, 35%, 72%, 0.1) 0%, transparent 45%)`
     }} />
 
-      {/* Floral Decorations */}
+      {/* Original Floral Decorations */}
       <FloralDecoration position="top-left" size="lg" className={`transition-all duration-1000 delay-500 ${isVisible ? "opacity-70 scale-100" : "opacity-0 scale-50"}`} />
       <FloralDecoration position="top-right" size="md" className={`transition-all duration-1000 delay-700 ${isVisible ? "opacity-60 scale-100" : "opacity-0 scale-50"}`} />
       <FloralDecoration position="bottom-left" size="md" className={`transition-all duration-1000 delay-600 ${isVisible ? "opacity-50 scale-100" : "opacity-0 scale-50"}`} />
       <FloralDecoration position="bottom-right" size="lg" className={`transition-all duration-1000 delay-800 ${isVisible ? "opacity-70 scale-100" : "opacity-0 scale-50"}`} />
+
+      {/* New Floral Decorations with sway animation */}
+      <FloralSide4 position="left" size="lg" className={`transition-all duration-1000 delay-300 ${isVisible ? "opacity-60" : "opacity-0"}`} />
+      <Floral5 position="right" size="md" className={`transition-all duration-1000 delay-400 ${isVisible ? "opacity-50" : "opacity-0"}`} />
+      <GoldenFloral position="top-right" size="sm" className={`transition-all duration-1000 delay-600 top-20 right-4 ${isVisible ? "opacity-40" : "opacity-0"}`} />
+      <FloralExposure position="bottom-left" size="sm" className={`transition-all duration-1000 delay-700 bottom-20 left-4 ${isVisible ? "opacity-50" : "opacity-0"}`} />
 
       {/* Sparkle decorations */}
       <SparklesDecoration count={8} />

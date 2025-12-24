@@ -3,6 +3,7 @@ import { Gift, Copy, Check } from "lucide-react";
 import { toast } from "sonner";
 import FloralDecoration from "./FloralDecoration";
 import SparklesDecoration from "./SparklesDecoration";
+import { FloralSide4, Floral5, GoldenFloral } from "./FloralDecorations";
 
 const GiftSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -53,6 +54,12 @@ const GiftSection = () => {
     >
       <FloralDecoration position="top-right" size="md" className="opacity-30" />
       <FloralDecoration position="bottom-left" size="md" className="opacity-30" />
+      
+      {/* New floral decorations with sway animation */}
+      <FloralSide4 position="left" size="lg" className="opacity-40 top-1/3" />
+      <Floral5 position="right" size="md" className="opacity-35 bottom-1/4" />
+      <GoldenFloral position="top-left" size="sm" className="opacity-30 top-12 left-6" />
+      
       <SparklesDecoration count={4} />
 
       <div className="container max-w-4xl mx-auto px-4 relative z-10">

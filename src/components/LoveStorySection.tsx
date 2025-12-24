@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import FloralDecoration from "./FloralDecoration";
 import SparklesDecoration from "./SparklesDecoration";
+import { GoldenFloral, FloralSide6, FloralExposure } from "./FloralDecorations";
 
 const LoveStorySection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -58,6 +59,12 @@ const LoveStorySection = () => {
       {/* Decorative Background */}
       <FloralDecoration position="top-right" size="md" className="opacity-30" />
       <FloralDecoration position="bottom-left" size="md" className="opacity-30" />
+      
+      {/* New floral decorations with sway animation */}
+      <GoldenFloral position="left" size="md" className="opacity-35 top-1/4" />
+      <FloralSide6 position="right" size="lg" className="opacity-40 bottom-1/4" />
+      <FloralExposure position="top-left" size="sm" className="opacity-30 top-16 left-8" />
+      
       <SparklesDecoration count={6} />
 
       <div className="container max-w-4xl mx-auto px-4 relative z-10">

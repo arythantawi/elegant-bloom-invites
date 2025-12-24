@@ -1,0 +1,111 @@
+import { useEffect, useState } from "react";
+
+interface TimeLeft {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
+
+const CountdownSection = () => {
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const weddingDate = new Date("2025-02-14T10:00:00").getTime();
+
+    const calculateTimeLeft = () => {
+      const now = new Date().getTime();
+      const difference = weddingDate - now;
+
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds: Math.floor((difference % (1000 * 60)) / 1000),
+        });
+      }
+    };
+
+    calculateTimeLeft();
+    const timer = setInterval(calculateTimeLeft, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    const section = document.getElementById("countdown-section");
+    if (section) observer.observe(section);
+
+    return () => observer.disconnect();
+  }, []);
+
+  const timeBlocks = [
+    { value: timeLeft.days, label: "Hari" },
+    { value: timeLeft.hours, label: "Jam" },
+    { value: timeLeft.minutes, label: "Menit" },
+    { value: timeLeft.seconds, label: "Detik" },
+  ];
+
+  return (
+    <section
+      id="countdown-section"
+      className="py-24 bg-gradient-to-b from-cream-white via-blush-pink/30 to-cream-white"
+    >
+      <div className="container max-w-4xl mx-auto px-4 text-center">
+        <div
+          className={`transition-all duration-700 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
+        >
+          <p className="font-display text-lg tracking-[0.2em] text-muted-foreground mb-4 uppercase">
+            Menuju Hari Bahagia
+          </p>
+          <h2 className="font-display text-4xl md:text-5xl text-foreground mb-12">
+            Hitung Mundur
+          </h2>
+        </div>
+
+        <div
+          className={`grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 transition-all duration-700 delay-200 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
+        >
+          {timeBlocks.map((block, index) => (
+            <div
+              key={block.label}
+              className="glass-card rounded-2xl p-6 md:p-8"
+              style={{ animationDelay: `${index * 100}ms` }}
+            >
+              <span className="font-display text-5xl md:text-6xl lg:text-7xl font-light text-foreground block mb-2">
+                {String(block.value).padStart(2, "0")}
+              </span>
+              <span className="text-sm tracking-widest text-muted-foreground uppercase">
+                {block.label}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-12 section-divider" />
+      </div>
+    </section>
+  );
+};
+
+export default CountdownSection;

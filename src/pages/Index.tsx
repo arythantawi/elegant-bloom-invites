@@ -18,7 +18,6 @@ const Index = () => {
   const [isEnvelopeOpened, setIsEnvelopeOpened] = useState(false);
   const [searchParams] = useSearchParams();
   
-  // Get guest name from URL parameter ?to=NamaTamu
   const guestName = searchParams.get("to")?.replace(/_/g, " ") || undefined;
 
   return (
@@ -31,7 +30,7 @@ const Index = () => {
       )}
       
       <main
-        className={`min-h-screen bg-cream-white transition-opacity duration-700 ${
+        className={`min-h-screen bg-cream transition-opacity duration-700 ${
           isEnvelopeOpened ? "opacity-100" : "opacity-0"
         }`}
       >

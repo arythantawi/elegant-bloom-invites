@@ -24,9 +24,9 @@ const CoupleSection = () => {
       id="couple-section"
       className="py-24 bg-gradient-to-b from-cream via-warm-cream/50 to-cream relative overflow-hidden"
     >
-      {/* Floral decorations */}
-      <FloralDecoration position="left" size="sm" className="opacity-40" />
-      <FloralDecoration position="right" size="sm" className="opacity-40" />
+{/* Floral decorations */}
+      <FloralDecoration position="left" size="sm" className="opacity-60" variant={3} />
+      <FloralDecoration position="right" size="sm" className="opacity-60" variant={4} />
       
       <SparklesDecoration count={4} />
 

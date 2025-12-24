@@ -19,40 +19,39 @@ serve(async (req) => {
       throw new Error('No image provided');
     }
 
-    const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
-    if (!openAIApiKey) {
-      throw new Error('OpenAI API key not configured');
+    const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
+    if (!lovableApiKey) {
+      throw new Error('Lovable API key not configured');
     }
 
     console.log('Generating caricature with style:', style);
 
     // Create prompt based on style
     const stylePrompts: Record<string, string> = {
-      'romantic': 'Transform this photo into a beautiful romantic wedding caricature with soft pastel colors, hearts, and floral decorations. Keep the facial features recognizable but stylized.',
-      'cartoon': 'Transform this photo into a fun Disney-style cartoon caricature for a wedding invitation. Make it cute and joyful with vibrant colors.',
-      'elegant': 'Transform this photo into an elegant, sophisticated caricature portrait suitable for a luxury wedding invitation. Use soft, muted tones and graceful artistic style.',
-      'whimsical': 'Transform this photo into a whimsical, fairy-tale style caricature with magical elements like sparkles and soft glow. Perfect for a romantic wedding theme.',
+      'romantic': 'a beautiful romantic wedding caricature with soft pastel colors, hearts, and floral decorations',
+      'cartoon': 'a fun Disney-style cartoon caricature for a wedding invitation with cute and joyful vibes and vibrant colors',
+      'elegant': 'an elegant, sophisticated caricature portrait suitable for a luxury wedding invitation with soft, muted tones and graceful artistic style',
+      'whimsical': 'a whimsical, fairy-tale style caricature with magical elements like sparkles and soft glow, perfect for a romantic wedding theme',
     };
 
-    const promptStyle = stylePrompts[style] || stylePrompts['romantic'];
-    const fullPrompt = `${promptStyle} Add a subtle watermark text "Wedding of Oky & Mita" at the bottom corner. The result should be high quality and suitable for a wedding invitation.`;
+    const styleDescription = stylePrompts[style] || stylePrompts['romantic'];
 
-    // Use GPT-4o Vision to analyze the image and generate a description
-    const visionResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+    // Use Lovable AI with gemini-2.5-flash-image-preview to generate the caricature directly from the image
+    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
+        'Authorization': `Bearer ${lovableApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o',
+        model: 'google/gemini-2.5-flash-image-preview',
         messages: [
           {
             role: 'user',
             content: [
               {
                 type: 'text',
-                text: 'Describe this person\'s appearance in detail for creating an artistic caricature. Focus on key facial features, hair style, and any accessories. Be specific but concise.'
+                text: `Transform this photo into ${styleDescription}. Keep the facial features recognizable but stylized as a cute caricature illustration. Add a subtle text "Wedding of Oky & Mita" at the bottom. The result should be high quality, artistic, and suitable for a wedding invitation. Create a beautiful illustrated caricature portrait.`
               },
               {
                 type: 'image_url',
@@ -63,52 +62,38 @@ serve(async (req) => {
             ]
           }
         ],
-        max_tokens: 300
+        modalities: ['image', 'text']
       }),
     });
 
-    const visionData = await visionResponse.json();
-    
-    if (!visionResponse.ok) {
-      console.error('Vision API error:', visionData);
-      throw new Error(visionData.error?.message || 'Failed to analyze image');
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.error('Lovable AI error:', response.status, errorData);
+      
+      if (response.status === 429) {
+        throw new Error('Rate limit exceeded. Please try again in a moment.');
+      }
+      if (response.status === 402) {
+        throw new Error('AI usage limit reached. Please add credits to continue.');
+      }
+      throw new Error(`Failed to generate caricature: ${errorData}`);
     }
 
-    const personDescription = visionData.choices?.[0]?.message?.content || '';
-    console.log('Person description:', personDescription);
+    const data = await response.json();
+    console.log('Lovable AI response received');
 
-    // Generate caricature using DALL-E
-    const dallePrompt = `Create a ${style} caricature illustration of a person with these features: ${personDescription}. ${fullPrompt}`;
+    // Extract the generated image from the response
+    const generatedImageUrl = data.choices?.[0]?.message?.images?.[0]?.image_url?.url;
     
-    console.log('DALL-E prompt:', dallePrompt);
-
-    const dalleResponse = await fetch('https://api.openai.com/v1/images/generations', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'dall-e-3',
-        prompt: dallePrompt,
-        n: 1,
-        size: '1024x1024',
-        quality: 'standard',
-        response_format: 'b64_json'
-      }),
-    });
-
-    const dalleData = await dalleResponse.json();
-
-    if (!dalleResponse.ok) {
-      console.error('DALL-E API error:', dalleData);
-      throw new Error(dalleData.error?.message || 'Failed to generate caricature');
+    if (!generatedImageUrl) {
+      console.error('No image in response:', JSON.stringify(data));
+      throw new Error('No image was generated. Please try again.');
     }
 
-    const generatedImage = dalleData.data?.[0]?.b64_json;
-    
-    if (!generatedImage) {
-      throw new Error('No image generated');
+    // Extract base64 from data URL
+    let generatedImage = generatedImageUrl;
+    if (generatedImageUrl.startsWith('data:')) {
+      generatedImage = generatedImageUrl.split(',')[1];
     }
 
     console.log('Caricature generated successfully');

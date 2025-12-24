@@ -28,10 +28,10 @@ serve(async (req) => {
 
     // Style prompts for different caricature styles
     const stylePrompts: Record<string, string> = {
-      'romantic': 'Transform this photo into a romantic wedding illustration. Apply a soft, dreamy artistic filter with pastel pink and cream tones. Add subtle heart decorations and floral elements around the edges. Keep the faces and features recognizable but give it an illustrated, artistic quality. Add elegant text "Wedding of Oky & Mita" at the bottom in a romantic script font.',
       'cartoon': 'Transform this photo into a fun Disney/Pixar style cartoon illustration. Make the features cute and stylized while keeping the person recognizable. Use vibrant, cheerful colors. Add playful decorative elements. Include text "Wedding of Oky & Mita" at the bottom in a fun cartoon font.',
       'elegant': 'Transform this photo into an elegant, sophisticated portrait illustration suitable for a luxury wedding invitation. Use soft, muted tones like champagne, ivory, and subtle gold accents. Apply a refined artistic style while keeping facial features recognizable. Add elegant text "Wedding of Oky & Mita" at the bottom in a classic serif font.',
       'whimsical': 'Transform this photo into a magical fairy-tale style illustration. Add enchanting elements like soft sparkles, gentle glow effects, and dreamy atmosphere. Use soft pastel colors with magical undertones. Keep the person recognizable but give them an ethereal, storybook quality. Add text "Wedding of Oky & Mita" at the bottom with a whimsical font.',
+      'retro': 'Transform this photo into a vintage 1950s-1960s retro style illustration. Create a nostalgic, classic American poster aesthetic with warm peachy and teal colors. Add a colorful sunburst/starburst background pattern. Include decorative vintage banner ribbons, daisies, music notes, hearts, and stars scattered around. Draw the couple in a cheerful, dancing pose with retro clothing style. Use a grainy, textured vintage print look. Add decorative banner with text "Wedding of Oky & Mita" at the top and "Forever Together" at the bottom in vintage typography.',
     };
 
     const prompt = stylePrompts[style] || stylePrompts['romantic'];

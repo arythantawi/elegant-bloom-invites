@@ -14,9 +14,7 @@ const ArtFilterSection = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+        setIsVisible(entry.isIntersecting);
       },
       { threshold: 0.2 }
     );
@@ -121,51 +119,70 @@ const ArtFilterSection = () => {
       className="py-24 bg-gradient-to-b from-cream-white via-soft-rose/20 to-cream-white relative overflow-hidden"
     >
       {/* Decorative Background */}
-      <div className="absolute top-1/4 right-0 w-64 h-64 bg-gradient-to-bl from-blush-pink/30 to-transparent rounded-full blur-3xl" />
-      <div className="absolute bottom-1/4 left-0 w-80 h-80 bg-gradient-to-tr from-warm-blush/20 to-transparent rounded-full blur-3xl" />
+      <div className={`absolute top-1/4 right-0 w-64 h-64 bg-gradient-to-bl from-blush-pink/30 to-transparent rounded-full blur-3xl transition-all duration-1000 ${
+        isVisible ? "opacity-100 scale-100" : "opacity-0 scale-50"
+      }`} />
+      <div className={`absolute bottom-1/4 left-0 w-80 h-80 bg-gradient-to-tr from-warm-blush/20 to-transparent rounded-full blur-3xl transition-all duration-1000 delay-200 ${
+        isVisible ? "opacity-100 scale-100" : "opacity-0 scale-50"
+      }`} />
 
       <div className="container max-w-4xl mx-auto px-4">
         <div
           className={`text-center mb-12 transition-all duration-700 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
           }`}
         >
-          <Wand2 className="w-12 h-12 text-accent mx-auto mb-4" />
-          <p className="font-display text-lg tracking-[0.2em] text-muted-foreground mb-4 uppercase">
+          <Wand2 className={`w-12 h-12 text-accent mx-auto mb-4 transition-all duration-500 delay-100 ${
+            isVisible ? "opacity-100 scale-100 rotate-0" : "opacity-0 scale-50 rotate-45"
+          }`} />
+          <p className={`font-display text-lg tracking-[0.2em] text-muted-foreground mb-4 uppercase transition-all duration-500 delay-200 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-6"
+          }`}>
             AI Art Filter
           </p>
-          <h2 className="font-display text-4xl md:text-5xl text-foreground mb-6">
+          <h2 className={`font-display text-4xl md:text-5xl text-foreground mb-6 transition-all duration-700 delay-300 ${
+            isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90"
+          }`}>
             Foto Artistik
           </h2>
-          <div className="section-divider mb-6" />
-          <p className="text-muted-foreground max-w-lg mx-auto">
+          <div className={`section-divider mb-6 transition-all duration-500 delay-400 ${
+            isVisible ? "opacity-100 w-24" : "opacity-0 w-0"
+          }`} />
+          <p className={`text-muted-foreground max-w-lg mx-auto transition-all duration-500 delay-500 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          }`}>
             Upload foto kamu dan AI akan mengubahnya menjadi karya seni dengan tema pernikahan Oky & Mita!
           </p>
-          <p className="text-muted-foreground/70 text-sm mt-2 max-w-md mx-auto">
+          <p className={`text-muted-foreground/70 text-sm mt-2 max-w-md mx-auto transition-all duration-500 delay-600 ${
+            isVisible ? "opacity-100" : "opacity-0"
+          }`}>
             * Hasil merupakan interpretasi artistik AI dan mungkin berbeda dari foto asli
           </p>
         </div>
 
         <div
-          className={`glass-card rounded-2xl p-8 transition-all duration-700 delay-200 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          className={`glass-card rounded-2xl p-8 touch-lift transition-all duration-700 delay-200 ${
+            isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-12 scale-95"
           }`}
         >
           {/* Style Selection */}
-          <div className="mb-8">
+          <div className={`mb-8 transition-all duration-500 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          }`} style={{ transitionDelay: "500ms" }}>
             <p className="text-sm font-medium text-foreground mb-4 text-center">
               Pilih Style Artistik:
             </p>
             <div className="flex flex-wrap justify-center gap-3">
-              {styles.map((style) => (
+              {styles.map((style, index) => (
                 <button
                   key={style.id}
                   onClick={() => setSelectedStyle(style.id)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                  className={`px-4 py-2 rounded-full text-sm font-medium touch-bounce transition-all duration-300 ${
                     selectedStyle === style.id
-                      ? "bg-warm-blush text-foreground shadow-soft"
+                      ? "bg-warm-blush text-foreground shadow-soft scale-105"
                       : "bg-blush-pink/30 text-muted-foreground hover:bg-blush-pink/50"
-                  }`}
+                  } ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+                  style={{ transitionDelay: `${600 + index * 100}ms` }}
                 >
                   {style.emoji} {style.name}
                 </button>
@@ -176,12 +193,14 @@ const ArtFilterSection = () => {
           {/* Image Upload Area */}
           <div className="grid md:grid-cols-2 gap-8">
             {/* Upload Section */}
-            <div className="relative">
+            <div className={`relative transition-all duration-500 ${
+              isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"
+            }`} style={{ transitionDelay: "700ms" }}>
               <p className="text-sm font-medium text-foreground mb-4 text-center">
                 Foto Asli
               </p>
               {selectedImage ? (
-                <div className="relative rounded-xl overflow-hidden aspect-square">
+                <div className="relative rounded-xl overflow-hidden aspect-square touch-lift">
                   <img
                     src={selectedImage}
                     alt="Uploaded"
@@ -189,13 +208,13 @@ const ArtFilterSection = () => {
                   />
                   <button
                     onClick={resetImage}
-                    className="absolute top-2 right-2 w-8 h-8 bg-foreground/80 hover:bg-foreground rounded-full flex items-center justify-center text-cream-white transition-colors"
+                    className="absolute top-2 right-2 w-8 h-8 bg-foreground/80 hover:bg-foreground rounded-full flex items-center justify-center text-cream-white transition-colors touch-bounce"
                   >
                     <X className="w-4 h-4" />
                   </button>
                 </div>
               ) : (
-                <label className="flex flex-col items-center justify-center aspect-square rounded-xl border-2 border-dashed border-warm-blush/50 bg-blush-pink/10 cursor-pointer hover:bg-blush-pink/20 transition-colors">
+                <label className="flex flex-col items-center justify-center aspect-square rounded-xl border-2 border-dashed border-warm-blush/50 bg-blush-pink/10 cursor-pointer hover:bg-blush-pink/20 transition-all duration-300 touch-pulse">
                   <Upload className="w-12 h-12 text-warm-blush mb-4" />
                   <span className="text-foreground font-medium mb-1">
                     Upload Foto
@@ -215,11 +234,13 @@ const ArtFilterSection = () => {
             </div>
 
             {/* Result Section */}
-            <div className="relative">
+            <div className={`relative transition-all duration-500 ${
+              isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
+            }`} style={{ transitionDelay: "800ms" }}>
               <p className="text-sm font-medium text-foreground mb-4 text-center">
                 Hasil Art Filter
               </p>
-              <div className="aspect-square rounded-xl border-2 border-dashed border-soft-rose/50 bg-soft-rose/10 flex items-center justify-center overflow-hidden">
+              <div className="aspect-square rounded-xl border-2 border-dashed border-soft-rose/50 bg-soft-rose/10 flex items-center justify-center overflow-hidden touch-lift">
                 {isLoading ? (
                   <div className="flex flex-col items-center gap-4">
                     <div className="w-12 h-12 border-4 border-warm-blush/30 border-t-warm-blush rounded-full animate-spin" />
@@ -249,11 +270,13 @@ const ArtFilterSection = () => {
           </div>
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
+          <div className={`flex flex-col sm:flex-row items-center justify-center gap-4 mt-8 transition-all duration-500 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          }`} style={{ transitionDelay: "900ms" }}>
             <button
               onClick={generateArtFilter}
               disabled={!selectedImage || isLoading}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-warm-blush to-accent text-cream-white font-medium rounded-full shadow-soft hover:shadow-glow transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-warm-blush to-accent text-cream-white font-medium rounded-full shadow-soft hover:shadow-glow touch-bounce transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Wand2 className="w-5 h-5" />
               {isLoading ? "Memproses..." : "Terapkan Filter"}
@@ -263,7 +286,7 @@ const ArtFilterSection = () => {
               <>
                 <button
                   onClick={downloadImage}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-warm-blush/20 hover:bg-warm-blush/30 text-foreground font-medium rounded-full transition-colors"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-warm-blush/20 hover:bg-warm-blush/30 text-foreground font-medium rounded-full touch-bounce transition-colors"
                 >
                   <Download className="w-5 h-5" />
                   Download
@@ -271,7 +294,7 @@ const ArtFilterSection = () => {
 
                 <button
                   onClick={shareToWhatsApp}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-green-500/20 hover:bg-green-500/30 text-foreground font-medium rounded-full transition-colors"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-green-500/20 hover:bg-green-500/30 text-foreground font-medium rounded-full touch-bounce transition-colors"
                 >
                   <Share2 className="w-5 h-5" />
                   Share WhatsApp
@@ -281,7 +304,9 @@ const ArtFilterSection = () => {
           </div>
 
           {/* Watermark Note */}
-          <p className="text-center text-xs text-muted-foreground mt-6">
+          <p className={`text-center text-xs text-muted-foreground mt-6 transition-all duration-500 ${
+            isVisible ? "opacity-100" : "opacity-0"
+          }`} style={{ transitionDelay: "1000ms" }}>
             * Hasil akan memiliki watermark "Wedding of Oky & Mita"
           </p>
         </div>

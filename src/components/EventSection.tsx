@@ -8,9 +8,7 @@ const EventSection = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+        setIsVisible(entry.isIntersecting);
       },
       { threshold: 0.2 }
     );
@@ -46,32 +44,42 @@ const EventSection = () => {
       <div className="container max-w-6xl mx-auto px-4">
         <div
           className={`text-center mb-16 transition-all duration-700 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
           }`}
         >
-          <p className="font-display text-lg tracking-[0.2em] text-muted-foreground mb-4 uppercase">
+          <p className={`font-display text-lg tracking-[0.2em] text-muted-foreground mb-4 uppercase transition-all duration-500 delay-100 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-6"
+          }`}>
             Bergabunglah Bersama Kami
           </p>
-          <h2 className="font-display text-4xl md:text-5xl text-foreground mb-6">
+          <h2 className={`font-display text-4xl md:text-5xl text-foreground mb-6 transition-all duration-700 delay-200 ${
+            isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90"
+          }`}>
             Detail Acara
           </h2>
-          <div className="section-divider" />
+          <div className={`section-divider transition-all duration-500 delay-300 ${
+            isVisible ? "opacity-100 w-24" : "opacity-0 w-0"
+          }`} />
         </div>
 
         {/* Venue Image */}
         <div
           className={`mb-16 transition-all duration-700 delay-200 ${
-            isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
+            isVisible ? "opacity-100 scale-100 rotate-0" : "opacity-0 scale-90 rotate-1"
           }`}
         >
-          <div className="relative rounded-2xl overflow-hidden shadow-card max-w-4xl mx-auto">
+          <div className="relative rounded-2xl overflow-hidden shadow-card max-w-4xl mx-auto touch-lift">
             <img
               src={venueImage}
               alt="Wedding venue"
-              className="w-full h-[300px] md:h-[400px] object-cover"
+              className={`w-full h-[300px] md:h-[400px] object-cover transition-all duration-1000 ${
+                isVisible ? "scale-100" : "scale-110"
+              }`}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-foreground/40 via-transparent to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 p-8 text-center">
+            <div className={`absolute bottom-0 left-0 right-0 p-8 text-center transition-all duration-500 delay-400 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+            }`}>
               <p className="font-display text-2xl md:text-3xl text-cream-white">
                 Rowokangkung, Lumajang
               </p>
@@ -84,32 +92,42 @@ const EventSection = () => {
           {events.map((event, index) => (
             <div
               key={event.title}
-              className={`glass-card rounded-2xl p-8 text-center transition-all duration-700 hover:shadow-glow ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+              className={`glass-card rounded-2xl p-8 text-center touch-lift transition-all duration-700 ${
+                isVisible ? "opacity-100 translate-y-0 rotate-0" : "opacity-0 translate-y-12 rotate-2"
               }`}
-              style={{ animationDelay: `${(index + 1) * 200}ms` }}
+              style={{ transitionDelay: `${400 + index * 150}ms` }}
             >
               {/* Decorative Top */}
-              <div className="w-16 h-1 bg-gradient-to-r from-soft-rose via-warm-blush to-soft-rose mx-auto mb-6 rounded-full" />
+              <div className={`w-16 h-1 bg-gradient-to-r from-soft-rose via-warm-blush to-soft-rose mx-auto mb-6 rounded-full transition-all duration-500 ${
+                isVisible ? "w-16" : "w-0"
+              }`} style={{ transitionDelay: `${500 + index * 150}ms` }} />
 
-              <h3 className="font-display text-3xl text-foreground mb-6">
+              <h3 className={`font-display text-3xl text-foreground mb-6 transition-all duration-500 ${
+                isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90"
+              }`} style={{ transitionDelay: `${550 + index * 150}ms` }}>
                 {event.title}
               </h3>
 
               <div className="space-y-4">
-                <div className="flex items-center justify-center gap-3 text-muted-foreground">
-                  <Calendar className="w-5 h-5 text-accent" />
+                <div className={`flex items-center justify-center gap-3 text-muted-foreground transition-all duration-500 ${
+                  isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-6"
+                }`} style={{ transitionDelay: `${600 + index * 150}ms` }}>
+                  <Calendar className="w-5 h-5 text-accent touch-bounce" />
                   <span>{event.date}</span>
                 </div>
 
-                <div className="flex items-center justify-center gap-3 text-muted-foreground">
-                  <Clock className="w-5 h-5 text-accent" />
+                <div className={`flex items-center justify-center gap-3 text-muted-foreground transition-all duration-500 ${
+                  isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-6"
+                }`} style={{ transitionDelay: `${650 + index * 150}ms` }}>
+                  <Clock className="w-5 h-5 text-accent touch-bounce" />
                   <span>{event.time}</span>
                 </div>
 
-                <div className="pt-4 border-t border-border/50">
+                <div className={`pt-4 border-t border-border/50 transition-all duration-500 ${
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+                }`} style={{ transitionDelay: `${700 + index * 150}ms` }}>
                   <div className="flex items-start justify-center gap-3 text-muted-foreground">
-                    <MapPin className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
+                    <MapPin className="w-5 h-5 text-accent mt-0.5 flex-shrink-0 touch-bounce" />
                     <div>
                       <p className="font-medium text-foreground">{event.location}</p>
                       <p className="text-sm mt-1">{event.address}</p>
@@ -123,7 +141,10 @@ const EventSection = () => {
                 href="https://maps.google.com/?q=Q8F6+5XG,+Pd.+Kobong,+Kedungrejo,+Rowokangkung,+Lumajang"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 mt-6 px-6 py-3 bg-warm-blush/20 hover:bg-warm-blush/30 rounded-full text-foreground text-sm font-medium transition-colors duration-300"
+                className={`inline-flex items-center gap-2 mt-6 px-6 py-3 bg-warm-blush/20 hover:bg-warm-blush/30 rounded-full text-foreground text-sm font-medium touch-bounce transition-all duration-500 ${
+                  isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90"
+                }`}
+                style={{ transitionDelay: `${750 + index * 150}ms` }}
               >
                 <MapPin className="w-4 h-4" />
                 Lihat Peta

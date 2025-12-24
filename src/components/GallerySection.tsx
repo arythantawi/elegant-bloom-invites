@@ -17,15 +17,7 @@ const FramedPhoto = ({
   alt,
   className = "",
   imageClassName = ""
-}: FramedPhotoProps) => <div className={`relative touch-lift group ${className}`}>
-    {/* Photo */}
-    <div className="absolute inset-[8%] overflow-hidden rounded-sm">
-      <img src={src} alt={alt} className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 ${imageClassName}`} />
-      
-    </div>
-    {/* Gold frame overlay */}
-    <img src={frameGold} alt="Frame" className="absolute inset-0 w-full h-full object-fill pointer-events-none z-10" />
-  </div>;
+}: FramedPhotoProps) => {};
 const GallerySection = () => {
   const [isVisible, setIsVisible] = useState(false);
   useEffect(() => {
@@ -71,9 +63,7 @@ const GallerySection = () => {
         {/* Gallery Grid with Gold Frames */}
         <div className="grid grid-cols-12 gap-6 max-w-4xl mx-auto">
           {/* Large main image */}
-          <div className={`col-span-7 row-span-2 transition-all duration-700 delay-300 ${isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-95"}`}>
-            <FramedPhoto src={images[0].src} alt={images[0].alt} className="h-full min-h-[350px] md:min-h-[450px]" />
-          </div>
+          
 
           {/* Second photo */}
           <div className={`col-span-5 transition-all duration-700 delay-400 ${isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-95"}`}>

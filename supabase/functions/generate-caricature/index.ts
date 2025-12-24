@@ -26,18 +26,61 @@ serve(async (req) => {
 
     console.log('Generating caricature with style:', style);
 
-    // Create prompt based on style
+    // Step 1: Analyze the uploaded image to get a description of the people
+    const analyzeResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${lovableApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'google/gemini-2.5-flash',
+        messages: [
+          {
+            role: 'user',
+            content: [
+              {
+                type: 'text',
+                text: `Analyze this photo and describe the people in it in detail. Include their approximate age, gender, facial features, hairstyle, hair color, skin tone, and any notable characteristics. Be specific and detailed so an artist could draw them. Respond with just the description, no other text.`
+              },
+              {
+                type: 'image_url',
+                image_url: {
+                  url: `data:image/jpeg;base64,${imageBase64}`
+                }
+              }
+            ]
+          }
+        ]
+      }),
+    });
+
+    if (!analyzeResponse.ok) {
+      const errorData = await analyzeResponse.text();
+      console.error('Analysis error:', analyzeResponse.status, errorData);
+      throw new Error('Failed to analyze the image');
+    }
+
+    const analyzeData = await analyzeResponse.json();
+    const description = analyzeData.choices?.[0]?.message?.content;
+    
+    if (!description) {
+      throw new Error('Could not analyze the image');
+    }
+
+    console.log('Image analysis complete:', description.substring(0, 100) + '...');
+
+    // Step 2: Generate the caricature based on the description
     const stylePrompts: Record<string, string> = {
-      'romantic': 'a beautiful romantic wedding caricature with soft pastel colors, hearts, and floral decorations',
-      'cartoon': 'a fun Disney-style cartoon caricature for a wedding invitation with cute and joyful vibes and vibrant colors',
-      'elegant': 'an elegant, sophisticated caricature portrait suitable for a luxury wedding invitation with soft, muted tones and graceful artistic style',
-      'whimsical': 'a whimsical, fairy-tale style caricature with magical elements like sparkles and soft glow, perfect for a romantic wedding theme',
+      'romantic': 'soft pastel colors, hearts, floral decorations, romantic wedding theme, dreamy atmosphere',
+      'cartoon': 'Disney-style cartoon, cute and joyful vibes, vibrant colors, fun and playful',
+      'elegant': 'sophisticated portrait style, soft muted tones, graceful artistic style, luxury wedding theme',
+      'whimsical': 'fairy-tale style, magical elements, sparkles and soft glow, enchanted romantic theme',
     };
 
     const styleDescription = stylePrompts[style] || stylePrompts['romantic'];
 
-    // Use Lovable AI with gemini-2.5-flash-image-preview to generate the caricature directly from the image
-    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+    const generateResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${lovableApiKey}`,
@@ -48,46 +91,46 @@ serve(async (req) => {
         messages: [
           {
             role: 'user',
-            content: [
-              {
-                type: 'text',
-                text: `Transform this photo into ${styleDescription}. Keep the facial features recognizable but stylized as a cute caricature illustration. Add a subtle text "Wedding of Oky & Mita" at the bottom. The result should be high quality, artistic, and suitable for a wedding invitation. Create a beautiful illustrated caricature portrait.`
-              },
-              {
-                type: 'image_url',
-                image_url: {
-                  url: `data:image/jpeg;base64,${imageBase64}`
-                }
-              }
-            ]
+            content: `Create a beautiful wedding caricature illustration of a couple with the following characteristics: ${description}
+
+Style: ${styleDescription}
+
+Requirements:
+- Draw them as a cute caricature couple in wedding attire
+- The groom should wear a formal suit or traditional wedding attire
+- The bride should wear a beautiful wedding dress
+- Add decorative elements matching the style
+- Add elegant text "Wedding of Oky & Mita" at the bottom
+- Make it high quality and artistic, suitable for a wedding invitation
+- Keep their facial features recognizable but stylized in a cute caricature way`
           }
         ],
         modalities: ['image', 'text']
       }),
     });
 
-    if (!response.ok) {
-      const errorData = await response.text();
-      console.error('Lovable AI error:', response.status, errorData);
+    if (!generateResponse.ok) {
+      const errorData = await generateResponse.text();
+      console.error('Generation error:', generateResponse.status, errorData);
       
-      if (response.status === 429) {
+      if (generateResponse.status === 429) {
         throw new Error('Rate limit exceeded. Please try again in a moment.');
       }
-      if (response.status === 402) {
+      if (generateResponse.status === 402) {
         throw new Error('AI usage limit reached. Please add credits to continue.');
       }
-      throw new Error(`Failed to generate caricature: ${errorData}`);
+      throw new Error('Failed to generate caricature');
     }
 
-    const data = await response.json();
-    console.log('Lovable AI response received');
+    const generateData = await generateResponse.json();
+    console.log('Generation response received');
 
     // Extract the generated image from the response
-    const generatedImageUrl = data.choices?.[0]?.message?.images?.[0]?.image_url?.url;
+    const generatedImageUrl = generateData.choices?.[0]?.message?.images?.[0]?.image_url?.url;
     
     if (!generatedImageUrl) {
-      console.error('No image in response:', JSON.stringify(data));
-      throw new Error('No image was generated. Please try again.');
+      console.error('No image in response:', JSON.stringify(generateData));
+      throw new Error('No image was generated. Please try again with a clearer photo.');
     }
 
     // Extract base64 from data URL

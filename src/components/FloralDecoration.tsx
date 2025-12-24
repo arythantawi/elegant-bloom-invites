@@ -87,9 +87,9 @@ const FloralDecoration = ({
     }
   };
 
-  // Check if current image is floral1 (Color_Fill_1c.png) to apply sway animation
   const currentImage = getFloralImage();
-  const shouldSway = currentImage === floral1;
+  // All floral images should have sway animation
+  const shouldSway = true;
 
   const parallaxStyle = enableParallax ? {
     transform: `${baseTransforms[position]} translateY(${parallax.y}px) rotate(${parallax.rotate}deg)`,

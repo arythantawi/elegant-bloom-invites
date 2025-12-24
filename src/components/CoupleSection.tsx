@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import FloralDecoration from "./FloralDecoration";
 import SparklesDecoration from "./SparklesDecoration";
 import frameGold from "@/assets/frame-gold.png";
+import floralSide1 from "@/assets/floral-side-1.png";
+import floralSide2 from "@/assets/floral-side-2.png";
+import floralSide3 from "@/assets/floral-side-3.png";
 
 const CoupleSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -55,10 +58,27 @@ const CoupleSection = () => {
         <div className="grid md:grid-cols-2 gap-12 md:gap-16">
           {/* Groom */}
           <div
-            className={`text-center transition-all duration-700 delay-300 ${
+            className={`text-center relative transition-all duration-700 delay-300 ${
               isVisible ? "opacity-100 translate-x-0 rotate-0" : "opacity-0 -translate-x-12 -rotate-3"
             }`}
           >
+            {/* Left side decorations */}
+            <img 
+              src={floralSide1} 
+              alt="" 
+              className="absolute -left-8 md:-left-16 top-0 w-20 md:w-28 opacity-70 animate-sway pointer-events-none"
+            />
+            <img 
+              src={floralSide2} 
+              alt="" 
+              className="absolute -left-6 md:-left-12 bottom-8 w-16 md:w-24 opacity-60 pointer-events-none"
+            />
+            <img 
+              src={floralSide3} 
+              alt="" 
+              className="absolute -left-4 md:-left-10 top-1/2 -translate-y-1/2 w-14 md:w-20 opacity-50 pointer-events-none"
+            />
+
             <div className="glass-card rounded-2xl p-8 touch-lift border-dusty-rose/20">
               <div className={`relative w-32 h-40 mx-auto mb-6 transition-all duration-500 delay-400 ${
                 isVisible ? "scale-100 rotate-0" : "scale-0 rotate-180"
@@ -90,10 +110,27 @@ const CoupleSection = () => {
 
           {/* Bride */}
           <div
-            className={`text-center transition-all duration-700 delay-500 ${
+            className={`text-center relative transition-all duration-700 delay-500 ${
               isVisible ? "opacity-100 translate-x-0 rotate-0" : "opacity-0 translate-x-12 rotate-3"
             }`}
           >
+            {/* Right side decorations */}
+            <img 
+              src={floralSide1} 
+              alt="" 
+              className="absolute -right-8 md:-right-16 top-0 w-20 md:w-28 opacity-70 animate-sway pointer-events-none scale-x-[-1]"
+            />
+            <img 
+              src={floralSide2} 
+              alt="" 
+              className="absolute -right-6 md:-right-12 bottom-8 w-16 md:w-24 opacity-60 pointer-events-none scale-x-[-1]"
+            />
+            <img 
+              src={floralSide3} 
+              alt="" 
+              className="absolute -right-4 md:-right-10 top-1/2 -translate-y-1/2 w-14 md:w-20 opacity-50 pointer-events-none scale-x-[-1]"
+            />
+
             <div className="glass-card rounded-2xl p-8 touch-lift border-sage-green/20">
               <div className={`relative w-32 h-40 mx-auto mb-6 transition-all duration-500 delay-600 ${
                 isVisible ? "scale-100 rotate-0" : "scale-0 -rotate-180"

@@ -71,12 +71,14 @@ const CoupleSection = () => {
             <img 
               src={floralSide2} 
               alt="" 
-              className="absolute -left-6 md:-left-12 bottom-8 w-16 md:w-24 opacity-60 pointer-events-none"
+              className="absolute -left-6 md:-left-12 bottom-8 w-16 md:w-24 opacity-60 animate-sway pointer-events-none"
+              style={{ animationDelay: '0.5s' }}
             />
             <img 
               src={floralSide3} 
               alt="" 
-              className="absolute -left-4 md:-left-10 top-1/2 -translate-y-1/2 w-14 md:w-20 opacity-50 pointer-events-none"
+              className="absolute -left-4 md:-left-10 top-1/2 -translate-y-1/2 w-14 md:w-20 opacity-50 animate-sway pointer-events-none"
+              style={{ animationDelay: '1s' }}
             />
 
             <div className="glass-card rounded-2xl p-8 touch-lift border-dusty-rose/20">
@@ -123,12 +125,14 @@ const CoupleSection = () => {
             <img 
               src={floralSide2} 
               alt="" 
-              className="absolute -right-6 md:-right-12 bottom-8 w-16 md:w-24 opacity-60 pointer-events-none scale-x-[-1]"
+              className="absolute -right-6 md:-right-12 bottom-8 w-16 md:w-24 opacity-60 animate-sway pointer-events-none scale-x-[-1]"
+              style={{ animationDelay: '0.7s' }}
             />
             <img 
               src={floralSide3} 
               alt="" 
-              className="absolute -right-4 md:-right-10 top-1/2 -translate-y-1/2 w-14 md:w-20 opacity-50 pointer-events-none scale-x-[-1]"
+              className="absolute -right-4 md:-right-10 top-1/2 -translate-y-1/2 w-14 md:w-20 opacity-50 animate-sway pointer-events-none scale-x-[-1]"
+              style={{ animationDelay: '1.2s' }}
             />
 
             <div className="glass-card rounded-2xl p-8 touch-lift border-sage-green/20">

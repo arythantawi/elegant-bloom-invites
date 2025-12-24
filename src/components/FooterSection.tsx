@@ -9,11 +9,11 @@ const FooterSection = () => {
       <div className="container max-w-4xl mx-auto px-4 text-center">
         {/* Names */}
         <h2 className="font-display text-4xl md:text-5xl mb-4">
-          Sarah & Michael
+          Oky & Mita
         </h2>
 
         <p className="text-cream-white/60 mb-8 font-display text-xl italic">
-          14 Februari 2025
+          16 - 17 Januari 2026
         </p>
 
         {/* Quote */}
@@ -33,7 +33,7 @@ const FooterSection = () => {
             <Instagram className="w-5 h-5" />
           </a>
           <a
-            href="mailto:sarah.michael@wedding.com"
+            href="mailto:oky.mita@wedding.com"
             className="w-12 h-12 rounded-full bg-cream-white/10 hover:bg-warm-blush/30 flex items-center justify-center transition-colors duration-300"
           >
             <Mail className="w-5 h-5" />
@@ -45,10 +45,10 @@ const FooterSection = () => {
 
         {/* Copyright */}
         <p className="text-cream-white/40 text-sm flex items-center justify-center gap-2">
-          Made with <Heart className="w-4 h-4 text-warm-blush fill-warm-blush" /> by Sarah & Michael
+          Made with <Heart className="w-4 h-4 text-warm-blush fill-warm-blush" /> by Oky & Mita
         </p>
         <p className="text-cream-white/30 text-xs mt-2">
-          © 2025 All Rights Reserved
+          © 2026 All Rights Reserved
         </p>
       </div>
     </footer>

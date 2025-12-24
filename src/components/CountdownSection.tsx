@@ -17,7 +17,7 @@ const CountdownSection = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const weddingDate = new Date("2025-02-14T10:00:00").getTime();
+    const weddingDate = new Date("2026-01-16T07:00:00").getTime();
 
     const calculateTimeLeft = () => {
       const now = new Date().getTime();

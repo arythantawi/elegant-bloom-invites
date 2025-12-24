@@ -5,9 +5,10 @@ import couplePrewedding from "@/assets/couple-prewedding.png";
 
 interface EnvelopeOpeningProps {
   onOpen: () => void;
+  guestName?: string;
 }
 
-const EnvelopeOpening = ({ onOpen }: EnvelopeOpeningProps) => {
+const EnvelopeOpening = ({ onOpen, guestName }: EnvelopeOpeningProps) => {
   const [isOpening, setIsOpening] = useState(false);
   const [isFullyOpen, setIsFullyOpen] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
@@ -161,11 +162,11 @@ const EnvelopeOpening = ({ onOpen }: EnvelopeOpeningProps) => {
                 The Wedding of
               </p>
               <h2 className="font-display text-2xl md:text-3xl text-foreground">
-                Sarah & Michael
+                Oky & Mita
               </h2>
               <div className="w-12 h-px bg-warm-blush my-3" />
               <p className="text-sm text-muted-foreground">
-                14 Februari 2025
+                16 - 17 Januari 2026
               </p>
             </div>
           </div>
@@ -192,15 +193,15 @@ const EnvelopeOpening = ({ onOpen }: EnvelopeOpeningProps) => {
       <div className="absolute top-8 left-0 right-0 text-center animate-fade-up">
         <p className="text-xs tracking-[0.3em] text-muted-foreground uppercase mb-1">The Wedding of</p>
         <h1 className="font-display text-3xl md:text-4xl text-foreground animate-shimmer">
-          Sarah & Michael
+          Oky & Mita
         </h1>
-        <p className="mt-2 text-sm text-muted-foreground tracking-wide">14 Februari 2025</p>
+        <p className="mt-2 text-sm text-muted-foreground tracking-wide">16 - 17 Januari 2026</p>
       </div>
 
       {/* Names text at bottom */}
       <div className="absolute bottom-8 left-0 right-0 text-center animate-fade-up" style={{ animationDelay: '0.5s' }}>
         <p className="text-sm text-muted-foreground tracking-widest">
-          Untuk: <span className="font-medium text-foreground">Tamu Undangan</span>
+          Kepada Yth: <span className="font-medium text-foreground">{guestName || "Tamu Undangan"}</span>
         </p>
       </div>
 

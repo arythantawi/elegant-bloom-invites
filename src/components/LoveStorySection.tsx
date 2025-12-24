@@ -21,10 +21,10 @@ const LoveStorySection = () => {
   }, []);
 
   const milestones = [
-    { year: "2018", title: "Pertama Bertemu", description: "Di sebuah acara kampus yang mengubah segalanya" },
-    { year: "2019", title: "Jatuh Cinta", description: "Momen ketika kami tahu ini adalah takdir" },
-    { year: "2023", title: "Lamaran", description: "Ya, aku mau menghabiskan selamanya bersamamu" },
-    { year: "2025", title: "Pernikahan", description: "Memulai babak baru kehidupan bersama" },
+    { year: "2020", title: "Awal Bertemu", description: "Takdir mempertemukan kami di perjalanan yang sama" },
+    { year: "2022", title: "Perjuangan", description: "Melewati suka dan duka bersama menguatkan cinta" },
+    { year: "2025", title: "Lamaran", description: "Sebuah pertanyaan yang mengubah segalanya" },
+    { year: "2026", title: "Pernikahan", description: "Dua hati menjadi satu dalam ikatan suci" },
   ];
 
   return (
@@ -61,7 +61,7 @@ const LoveStorySection = () => {
             <div className="relative rounded-2xl overflow-hidden shadow-card">
               <img
                 src={coupleImage}
-                alt="Sarah dan Michael"
+                alt="Oky dan Mita"
                 className="w-full h-[500px] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-foreground/20 to-transparent" />

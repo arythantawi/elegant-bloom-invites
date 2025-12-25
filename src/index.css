@@ -556,31 +556,19 @@
   --pin-color: hsl(var(--olive-green));
 }
 
-/* Angle variations */
-.swaying-figure:nth-child(3n) {
-  --angle: 3deg;
-}
-.swaying-figure:nth-child(3n + 1) {
-  --angle: -3.3deg;
-}
-.swaying-figure:nth-child(3n + 2) {
-  --angle: 2.4deg;
-}
-
-/* Direction variations */
-.swaying-figure:nth-child(odd) {
-  --direction: alternate;
-}
-.swaying-figure:nth-child(even) {
-  --direction: alternate-reverse;
-}
+/* Angle and timing variations for natural look */
+.swaying-figure:nth-child(1) { --sway-duration: 4s; --sway-delay: 0s; }
+.swaying-figure:nth-child(2) { --sway-duration: 4.5s; --sway-delay: -0.5s; }
+.swaying-figure:nth-child(3) { --sway-duration: 5s; --sway-delay: -1s; }
+.swaying-figure:nth-child(4) { --sway-duration: 4.2s; --sway-delay: -1.5s; }
+.swaying-figure:nth-child(5) { --sway-duration: 4.8s; --sway-delay: -0.3s; }
+.swaying-figure:nth-child(6) { --sway-duration: 5.2s; --sway-delay: -0.8s; }
+.swaying-figure:nth-child(7) { --sway-duration: 4.3s; --sway-delay: -1.2s; }
+.swaying-figure:nth-child(8) { --sway-duration: 4.7s; --sway-delay: -0.6s; }
 
 .swaying-figure {
-  --angle: 3deg;
-  --count: 5;
-  --duration: 1s;
-  --delay: calc(-0.5 * var(--duration));
-  --direction: alternate;
+  --sway-duration: 4.5s;
+  --sway-delay: 0s;
   --pin-color: hsl(var(--dusty-rose));
 
   position: relative;
@@ -597,23 +585,19 @@
   background-position: center;
   background-blend-mode: multiply;
 
-  transform-origin: center 0.22rem;
+  transform-origin: center top;
   will-change: transform;
   break-inside: avoid;
   overflow: hidden;
   outline: 1px solid transparent;
   backface-visibility: hidden;
+  
+  /* Continuous gentle swaying animation */
+  animation: gentleSway var(--sway-duration) ease-in-out var(--sway-delay) infinite;
 }
 
-/* Active swing animation */
-.swaying-gallery.active .swaying-figure {
-  animation-duration: var(--duration), 1.5s;
-  animation-delay: var(--delay), calc(var(--delay) + var(--duration) * var(--count));
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: var(--count), 1;
-  animation-direction: var(--direction), normal;
-  animation-fill-mode: both;
-  animation-name: swing, swingEnd;
+.swaying-figure:hover {
+  animation-play-state: paused;
 }
 
 /* Pin decoration */
@@ -651,17 +635,18 @@
   z-index: 1;
 }
 
-@keyframes swing {
-  0% {
-    transform: rotate3d(0, 0, 1, calc(-1 * var(--angle)));
+/* Gentle continuous swaying like hanging photo frame in wind */
+@keyframes gentleSway {
+  0%, 100% {
+    transform: rotate(-1.5deg);
   }
-  100% {
-    transform: rotate3d(0, 0, 1, var(--angle));
+  25% {
+    transform: rotate(1deg);
   }
-}
-
-@keyframes swingEnd {
-  to {
-    transform: rotate3d(0, 0, 1, 0deg);
+  50% {
+    transform: rotate(1.5deg);
+  }
+  75% {
+    transform: rotate(-1deg);
   }
 }

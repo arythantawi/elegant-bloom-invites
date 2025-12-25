@@ -6,14 +6,13 @@ import coupleImage from "@/assets/couple-1.jpg";
 import FloralDecoration from "./FloralDecoration";
 import SparklesDecoration from "./SparklesDecoration";
 import { FloralSide4, Floral5, FloralSide5, Floral6, FloralExposure, GoldenFloral, FloralSide6, Floral7 } from "./FloralDecorations";
-
 gsap.registerPlugin(ScrollTrigger);
-
 interface HeroSectionProps {
   guestName?: string;
 }
-
-const HeroSection = ({ guestName }: HeroSectionProps) => {
+const HeroSection = ({
+  guestName
+}: HeroSectionProps) => {
   const sectionRef = useRef<HTMLElement>(null);
   const taglineRef = useRef<HTMLDivElement>(null);
   const dateRef = useRef<HTMLDivElement>(null);
@@ -22,10 +21,13 @@ const HeroSection = ({ guestName }: HeroSectionProps) => {
   const guestRef = useRef<HTMLDivElement>(null);
   const scrollIndicatorRef = useRef<HTMLDivElement>(null);
   const floralsRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      const tl = gsap.timeline({
+        defaults: {
+          ease: "power3.out"
+        }
+      });
 
       // Floral decorations scale in
       if (floralsRef.current) {
@@ -34,7 +36,7 @@ const HeroSection = ({ guestName }: HeroSectionProps) => {
           scale: 0.5,
           opacity: 0,
           duration: 1,
-          stagger: 0.1,
+          stagger: 0.1
         }, 0);
       }
 
@@ -42,21 +44,21 @@ const HeroSection = ({ guestName }: HeroSectionProps) => {
       tl.from(taglineRef.current, {
         y: -50,
         opacity: 0,
-        duration: 1,
+        duration: 1
       }, 0.3);
 
       // Date badge
       tl.from(dateRef.current, {
         scale: 0.9,
         opacity: 0,
-        duration: 0.7,
+        duration: 0.7
       }, 0.5);
 
       // Names
       tl.from(namesRef.current, {
         y: 30,
         opacity: 0,
-        duration: 0.7,
+        duration: 0.7
       }, 0.6);
 
       // Gallery grid
@@ -67,7 +69,7 @@ const HeroSection = ({ guestName }: HeroSectionProps) => {
           opacity: 0,
           scale: 0.95,
           duration: 0.8,
-          stagger: 0.1,
+          stagger: 0.1
         }, 0.7);
       }
 
@@ -76,14 +78,14 @@ const HeroSection = ({ guestName }: HeroSectionProps) => {
         tl.from(guestRef.current, {
           y: 30,
           opacity: 0,
-          duration: 0.7,
+          duration: 0.7
         }, 1);
       }
 
       // Scroll indicator
       tl.from(scrollIndicatorRef.current, {
         opacity: 0,
-        duration: 1,
+        duration: 1
       }, 1.2);
 
       // Pulsing scroll indicator
@@ -92,25 +94,21 @@ const HeroSection = ({ guestName }: HeroSectionProps) => {
         duration: 1,
         repeat: -1,
         yoyo: true,
-        ease: "sine.inOut",
+        ease: "sine.inOut"
       });
-
     }, sectionRef);
-
     return () => ctx.revert();
   }, []);
-
-  return (
-    <section ref={sectionRef} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-cream">
+  return <section ref={sectionRef} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-cream">
       {/* Background with soft texture */}
       <div className="absolute inset-0 bg-gradient-to-b from-cream via-warm-cream to-cream opacity-90" />
       
       {/* Subtle background pattern */}
       <div className="absolute inset-0 opacity-30" style={{
-        backgroundImage: `radial-gradient(circle at 20% 50%, hsl(10, 35%, 72%, 0.15) 0%, transparent 50%),
+      backgroundImage: `radial-gradient(circle at 20% 50%, hsl(10, 35%, 72%, 0.15) 0%, transparent 50%),
                           radial-gradient(circle at 80% 30%, hsl(100, 20%, 50%, 0.1) 0%, transparent 40%),
                           radial-gradient(circle at 60% 80%, hsl(10, 35%, 72%, 0.1) 0%, transparent 45%)`
-      }} />
+    }} />
 
       {/* Floral Decorations */}
       <div ref={floralsRef}>
@@ -193,25 +191,21 @@ const HeroSection = ({ guestName }: HeroSectionProps) => {
         </div>
 
         {/* Guest Name */}
-        {guestName && (
-          <div ref={guestRef} className="mt-8">
+        {guestName && <div ref={guestRef} className="mt-8">
             <p className="text-muted-foreground text-sm tracking-widest uppercase mb-2">Kepada Yth.</p>
             <p className="font-script text-3xl md:text-4xl text-dusty-rose">
               {guestName}
             </p>
-          </div>
-        )}
+          </div>}
 
         {/* Scroll Indicator */}
         <div ref={scrollIndicatorRef} className="absolute bottom-8 left-1/2 -translate-x-1/2">
           <div className="flex flex-col items-center gap-2 text-muted-foreground touch-bounce cursor-pointer">
-            <span className="text-xs tracking-widest uppercase font-display">Scroll</span>
-            <div className="scroll-line w-px h-10 bg-gradient-to-b from-dusty-rose to-transparent" />
+            
+            
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default HeroSection;

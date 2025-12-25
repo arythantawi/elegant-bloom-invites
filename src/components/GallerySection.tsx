@@ -63,12 +63,11 @@ const GallerySection = () => {
     { src: hero, alt: "Dekorasi pernikahan" },
   ];
 
-  // Create 3 columns with duplicated images for infinite scroll
-  const columns = Array.from({ length: 3 }, (_, colIndex) => {
-    // Shuffle images differently for each column
+  // Create 5 columns with images
+  const columns = Array.from({ length: 5 }, (_, colIndex) => {
     const shuffled = [...galleryImages].sort(() => Math.random() - 0.5);
-    // Triple the images for seamless infinite scroll
-    return [...shuffled, ...shuffled, ...shuffled];
+    // Duplicate for seamless infinite scroll
+    return [...shuffled, ...shuffled];
   });
 
   return (
@@ -94,34 +93,32 @@ const GallerySection = () => {
           <div ref={dividerRef} className="section-divider w-24 mx-auto" />
         </div>
 
-        {/* Infinite Scroll Column Gallery */}
+        {/* Infinite Scroll Column Gallery - CodePen Style */}
         <div 
           ref={galleryContainerRef}
-          className="gallery-infinite-container relative max-w-3xl mx-auto h-[280px] md:h-[350px] rounded-3xl overflow-hidden bg-gradient-to-br from-cream/50 via-blush-pink/10 to-sage-green/10 backdrop-blur-sm border border-dusty-rose/20"
+          className="gallery-container relative max-w-4xl mx-auto h-[300px] md:h-[400px] rounded-2xl overflow-hidden border border-dusty-rose/30 bg-gradient-to-br from-cream/80 to-blush-pink/20"
         >
           <div className="flex h-full w-full">
             {columns.map((columnImages, colIndex) => (
               <div
                 key={colIndex}
-                className="gallery-column flex-1 overflow-hidden relative gallery-column-up"
-                style={{
-                  animationDuration: `${25 + colIndex * 5}s`,
-                }}
+                className={`gallery-col flex-1 overflow-hidden relative ${
+                  colIndex % 2 === 0 ? 'animate-slide-up' : 'animate-slide-down'
+                }`}
               >
                 <div className="flex flex-col">
                   {columnImages.map((image, imgIndex) => (
                     <div
                       key={`${colIndex}-${imgIndex}`}
-                      className="gallery-item relative p-1"
+                      className="gallery-item h-[100px] md:h-[130px] p-1"
                     >
-                      <div className="w-full h-full overflow-hidden rounded-lg group cursor-pointer">
+                      <div className="w-full h-full overflow-hidden rounded-lg group">
                         <img
                           src={image.src}
                           alt={image.alt}
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                           loading="lazy"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
                       </div>
                     </div>
                   ))}
@@ -130,9 +127,9 @@ const GallerySection = () => {
             ))}
           </div>
 
-          {/* Gradient overlays for seamless effect */}
-          <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-cream to-transparent pointer-events-none z-10" />
-          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-cream to-transparent pointer-events-none z-10" />
+          {/* Gradient overlays */}
+          <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-cream to-transparent pointer-events-none z-10" />
+          <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-cream to-transparent pointer-events-none z-10" />
         </div>
 
         {/* Hint */}

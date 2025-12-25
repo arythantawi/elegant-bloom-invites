@@ -535,11 +535,11 @@
 }
 
 .animate-slide-up {
-  animation: continuousSlideUp 12s linear infinite;
+  animation: continuousSlideUp 30s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 .animate-slide-down {
-  animation: continuousSlideDown 12s linear infinite;
+  animation: continuousSlideDown 30s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 .gallery-col:hover {

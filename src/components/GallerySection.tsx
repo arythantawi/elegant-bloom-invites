@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import couple1 from "@/assets/couple-1.jpg";
@@ -16,9 +16,6 @@ const GallerySection = () => {
   const headerRef = useRef<HTMLParagraphElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const dividerRef = useRef<HTMLDivElement>(null);
-  const galleryRef = useRef<HTMLDivElement>(null);
-  const [isActive, setIsActive] = useState(false);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -40,34 +37,6 @@ const GallerySection = () => {
 
     return () => ctx.revert();
   }, []);
-
-  // Swaying animation on scroll
-  useEffect(() => {
-    const animStart = () => {
-      if (!isActive) {
-        setIsActive(true);
-        if (timeoutRef.current) clearTimeout(timeoutRef.current);
-        timeoutRef.current = setTimeout(() => {
-          setIsActive(false);
-        }, 10000);
-      }
-    };
-
-    const handleScroll = () => animStart();
-    const handleResize = () => animStart();
-
-    document.addEventListener("scroll", handleScroll);
-    window.addEventListener("resize", handleResize);
-    
-    // Initial animation
-    animStart();
-
-    return () => {
-      document.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleResize);
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    };
-  }, [isActive]);
 
   const galleryImages = [
     { src: couple1, alt: "Oky dan Mita - Foto 1", caption: "Our First Meeting" },
@@ -104,17 +73,11 @@ const GallerySection = () => {
         </div>
 
         {/* Swaying Photo Gallery */}
-        <div 
-          ref={galleryRef}
-          className={`swaying-gallery ${isActive ? 'active' : ''}`}
-        >
+        <div className="swaying-gallery">
           {galleryImages.map((image, index) => (
             <figure 
               key={index}
               className="swaying-figure"
-              style={{
-                '--index': index,
-              } as React.CSSProperties}
             >
               <img
                 src={image.src}
@@ -128,7 +91,7 @@ const GallerySection = () => {
 
         {/* Hint */}
         <p className="text-center text-muted-foreground text-sm mt-8">
-          ✨ Scroll untuk melihat efek bergoyang
+          ✨ Foto bergoyang perlahan seperti tertiup angin
         </p>
       </div>
     </section>

@@ -103,11 +103,9 @@ const GallerySection = () => {
             {columns.map((columnImages, colIndex) => (
               <div
                 key={colIndex}
-                className={`gallery-column flex-1 overflow-hidden relative ${
-                  colIndex % 2 === 0 ? 'gallery-column-up' : 'gallery-column-down'
-                }`}
+                className="gallery-column flex-1 overflow-hidden relative gallery-column-up"
                 style={{
-                  animationDuration: `${18 + colIndex * 3}s`,
+                  animationDuration: `${25 + colIndex * 5}s`,
                 }}
               >
                 <div className="flex flex-col">

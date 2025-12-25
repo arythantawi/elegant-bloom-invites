@@ -534,11 +534,7 @@
 }
 
 .gallery-column-up {
-  animation: gallerySlideUp 15s linear infinite;
-}
-
-.gallery-column-down {
-  animation: gallerySlideDown 15s linear infinite;
+  animation: gallerySlideUp 25s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 .gallery-column:hover {

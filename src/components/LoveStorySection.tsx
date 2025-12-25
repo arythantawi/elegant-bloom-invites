@@ -1,23 +1,99 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import FloralDecoration from "./FloralDecoration";
 import SparklesDecoration from "./SparklesDecoration";
 import { GoldenFloral, FloralSide6, FloralExposure } from "./FloralDecorations";
 
+gsap.registerPlugin(ScrollTrigger);
+
 const LoveStorySection = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLParagraphElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const dividerRef = useRef<HTMLDivElement>(null);
+  const timelineRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting);
-      },
-      { threshold: 0.2 }
-    );
+    const ctx = gsap.context(() => {
+      // Header animations
+      gsap.from(headerRef.current, {
+        y: -30,
+        opacity: 0,
+        duration: 0.6,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      });
 
-    const section = document.getElementById("love-story-section");
-    if (section) observer.observe(section);
+      gsap.from(titleRef.current, {
+        scale: 0.9,
+        opacity: 0,
+        duration: 0.7,
+        delay: 0.1,
+        ease: "back.out(1.7)",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      });
 
-    return () => observer.disconnect();
+      gsap.from(dividerRef.current, {
+        width: 0,
+        opacity: 0,
+        duration: 0.6,
+        delay: 0.2,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      });
+
+      // Timeline items stagger
+      if (timelineRef.current) {
+        const items = timelineRef.current.querySelectorAll('.timeline-item');
+        items.forEach((item, i) => {
+          gsap.from(item, {
+            x: 50,
+            opacity: 0,
+            duration: 0.6,
+            delay: i * 0.15,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: item,
+              start: "top 90%",
+              toggleActions: "play none none none",
+            },
+          });
+
+          // Dot animation
+          const dot = item.querySelector('.timeline-dot');
+          if (dot) {
+            gsap.from(dot, {
+              scale: 0,
+              opacity: 0,
+              duration: 0.4,
+              delay: 0.2,
+              ease: "back.out(2)",
+              scrollTrigger: {
+                trigger: item,
+                start: "top 90%",
+                toggleActions: "play none none none",
+              },
+            });
+          }
+        });
+      }
+
+    }, sectionRef);
+
+    return () => ctx.revert();
   }, []);
 
   const milestones = [
@@ -53,6 +129,7 @@ const LoveStorySection = () => {
 
   return (
     <section
+      ref={sectionRef}
       id="love-story-section"
       className="py-24 bg-cream relative overflow-hidden"
     >
@@ -60,7 +137,7 @@ const LoveStorySection = () => {
       <FloralDecoration position="top-right" size="md" className="opacity-30" />
       <FloralDecoration position="bottom-left" size="md" className="opacity-30" />
       
-      {/* New floral decorations with sway animation */}
+      {/* New floral decorations */}
       <GoldenFloral position="left" size="md" className="opacity-35 top-1/4" />
       <FloralSide6 position="right" size="lg" className="opacity-40 bottom-1/4" />
       <FloralExposure position="top-left" size="sm" className="opacity-30 top-16 left-8" />
@@ -69,39 +146,26 @@ const LoveStorySection = () => {
 
       <div className="container max-w-4xl mx-auto px-4 relative z-10">
         {/* Header */}
-        <div
-          className={`text-center mb-16 transition-all duration-700 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-          }`}
-        >
-          <p className={`font-display text-lg tracking-[0.2em] text-muted-foreground mb-4 uppercase transition-all duration-500 delay-100 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-6"
-          }`}>
+        <div className="text-center mb-16">
+          <p ref={headerRef} className="font-display text-lg tracking-[0.2em] text-muted-foreground mb-4 uppercase">
             Perjalanan Cinta Kami
           </p>
-          <h2 className={`font-script text-5xl md:text-6xl mb-6 transition-all duration-700 delay-200 ${
-            isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90"
-          }`}>
+          <h2 ref={titleRef} className="font-script text-5xl md:text-6xl mb-6">
             <span className="text-dusty-rose">Kisah</span>{" "}
             <span className="text-sage-green">Kami</span>
           </h2>
-          <div className={`section-divider transition-all duration-500 delay-300 ${
-            isVisible ? "opacity-100 w-24" : "opacity-0 w-0"
-          }`} />
+          <div ref={dividerRef} className="section-divider w-24 mx-auto" />
         </div>
 
         {/* Timeline */}
-        <div className="relative pl-8 border-l-2 border-dusty-rose/30">
-          {milestones.map((milestone, index) => (
+        <div ref={timelineRef} className="relative pl-8 border-l-2 border-dusty-rose/30">
+          {milestones.map((milestone) => (
             <div
               key={milestone.year}
-              className={`relative mb-12 last:mb-0 transition-all duration-500 ${
-                isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
-              }`}
-              style={{ transitionDelay: `${500 + index * 150}ms` }}
+              className="timeline-item relative mb-12 last:mb-0"
             >
               {/* Timeline Dot */}
-              <div className={`absolute -left-[25px] w-4 h-4 rounded-full border-4 border-cream shadow-soft ${
+              <div className={`timeline-dot absolute -left-[25px] w-4 h-4 rounded-full border-4 border-cream shadow-soft ${
                 milestone.color === "dusty-rose" ? "bg-dusty-rose" : "bg-sage-green"
               }`} />
               

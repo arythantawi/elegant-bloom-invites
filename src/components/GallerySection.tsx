@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import couple1 from "@/assets/couple-1.jpg";
@@ -16,8 +16,9 @@ const GallerySection = () => {
   const headerRef = useRef<HTMLParagraphElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const dividerRef = useRef<HTMLDivElement>(null);
-  const galleryContainerRef = useRef<HTMLDivElement>(null);
-  const paletteRef = useRef<HTMLDivElement>(null);
+  const galleryRef = useRef<HTMLDivElement>(null);
+  const [isActive, setIsActive] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -35,40 +36,49 @@ const GallerySection = () => {
         width: 0, opacity: 0, duration: 0.6, delay: 0.2, ease: "power2.out",
         scrollTrigger: { trigger: sectionRef.current, start: "top 80%", toggleActions: "play none none none" },
       });
-
-      if (galleryContainerRef.current) {
-        gsap.from(galleryContainerRef.current, {
-          y: 50, opacity: 0, scale: 0.95, duration: 1, ease: "power3.out",
-          scrollTrigger: { trigger: galleryContainerRef.current, start: "top 85%", toggleActions: "play none none none" },
-        });
-      }
-
-      if (paletteRef.current) {
-        const colors = paletteRef.current.querySelectorAll('.color-item');
-        gsap.from(colors, {
-          scale: 0, opacity: 0, rotationY: 180, duration: 0.5, stagger: 0.1, ease: "back.out(2)",
-          scrollTrigger: { trigger: paletteRef.current, start: "top 95%", toggleActions: "play none none none" },
-        });
-      }
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
-  const galleryImages = [
-    { src: couple1, alt: "Oky dan Mita - Foto 1" },
-    { src: couple2, alt: "Oky dan Mita - Foto 2" },
-    { src: couplePrewedding, alt: "Pre-wedding" },
-    { src: venue, alt: "Venue pernikahan" },
-    { src: hero, alt: "Dekorasi pernikahan" },
-  ];
+  // Swaying animation on scroll
+  useEffect(() => {
+    const animStart = () => {
+      if (!isActive) {
+        setIsActive(true);
+        if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        timeoutRef.current = setTimeout(() => {
+          setIsActive(false);
+        }, 10000);
+      }
+    };
 
-  // Create 3 columns with images
-  const columns = Array.from({ length: 3 }, (_, colIndex) => {
-    const shuffled = [...galleryImages].sort(() => Math.random() - 0.5);
-    // Duplicate for seamless infinite scroll
-    return [...shuffled, ...shuffled];
-  });
+    const handleScroll = () => animStart();
+    const handleResize = () => animStart();
+
+    document.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResize);
+    
+    // Initial animation
+    animStart();
+
+    return () => {
+      document.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [isActive]);
+
+  const galleryImages = [
+    { src: couple1, alt: "Oky dan Mita - Foto 1", caption: "Our First Meeting" },
+    { src: couple2, alt: "Oky dan Mita - Foto 2", caption: "Love Blossoms" },
+    { src: couplePrewedding, alt: "Pre-wedding", caption: "Pre-Wedding" },
+    { src: venue, alt: "Venue pernikahan", caption: "Our Special Day" },
+    { src: hero, alt: "Dekorasi pernikahan", caption: "Beautiful Moments" },
+    { src: couple1, alt: "Oky dan Mita - Foto 3", caption: "Together Forever" },
+    { src: couple2, alt: "Oky dan Mita - Foto 4", caption: "Sweet Memories" },
+    { src: couplePrewedding, alt: "Pre-wedding 2", caption: "Happiness" },
+  ];
 
   return (
     <section 
@@ -82,7 +92,7 @@ const GallerySection = () => {
 
       <div className="container max-w-6xl mx-auto px-4 relative z-10">
         {/* Header */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-12">
           <p ref={headerRef} className="font-display text-lg tracking-[0.2em] text-muted-foreground mb-4 uppercase">
             Momen Bahagia
           </p>
@@ -93,57 +103,33 @@ const GallerySection = () => {
           <div ref={dividerRef} className="section-divider w-24 mx-auto" />
         </div>
 
-        {/* Infinite Scroll Column Gallery - CodePen Style */}
+        {/* Swaying Photo Gallery */}
         <div 
-          ref={galleryContainerRef}
-          className="gallery-container relative max-w-4xl mx-auto h-[300px] md:h-[400px] rounded-2xl overflow-hidden border border-dusty-rose/30 bg-gradient-to-br from-cream/80 to-blush-pink/20"
+          ref={galleryRef}
+          className={`swaying-gallery ${isActive ? 'active' : ''}`}
         >
-          <div className="flex h-full w-full">
-            {columns.map((columnImages, colIndex) => (
-              <div
-                key={colIndex}
-                className={`gallery-col flex-1 overflow-hidden relative ${
-                  colIndex % 2 === 0 ? 'animate-slide-up' : 'animate-slide-down'
-                }`}
-              >
-                <div className="flex flex-col">
-                  {columnImages.map((image, imgIndex) => (
-                    <div
-                      key={`${colIndex}-${imgIndex}`}
-                      className="gallery-item h-[100px] md:h-[130px] p-1"
-                    >
-                      <div className="w-full h-full overflow-hidden rounded-lg group">
-                        <img
-                          src={image.src}
-                          alt={image.alt}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                          loading="lazy"
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Gradient overlays */}
-          <div className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-cream to-transparent pointer-events-none z-10" />
-          <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-cream to-transparent pointer-events-none z-10" />
+          {galleryImages.map((image, index) => (
+            <figure 
+              key={index}
+              className="swaying-figure"
+              style={{
+                '--index': index,
+              } as React.CSSProperties}
+            >
+              <img
+                src={image.src}
+                alt={image.alt}
+                loading="lazy"
+              />
+              <figcaption>{image.caption}</figcaption>
+            </figure>
+          ))}
         </div>
 
         {/* Hint */}
-        <p className="text-center text-muted-foreground text-sm mt-6">
-          ✨ Hover untuk melihat lebih dekat
+        <p className="text-center text-muted-foreground text-sm mt-8">
+          ✨ Scroll untuk melihat efek bergoyang
         </p>
-
-        {/* Color palette */}
-        <div ref={paletteRef} className="flex items-center justify-center gap-3 mt-10">
-          <div className="color-item w-10 h-10 rounded-lg bg-dusty-rose shadow-sm touch-bounce cursor-pointer hover:scale-110 transition-transform" />
-          <div className="color-item w-10 h-10 rounded-lg bg-soft-taupe shadow-sm touch-bounce cursor-pointer hover:scale-110 transition-transform" />
-          <div className="color-item w-10 h-10 rounded-lg bg-sage-green shadow-sm touch-bounce cursor-pointer hover:scale-110 transition-transform" />
-          <div className="color-item w-10 h-10 rounded-lg bg-olive-green shadow-sm touch-bounce cursor-pointer hover:scale-110 transition-transform" />
-        </div>
       </div>
     </section>
   );

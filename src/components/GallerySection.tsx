@@ -97,7 +97,7 @@ const GallerySection = () => {
         {/* Infinite Scroll Column Gallery */}
         <div 
           ref={galleryContainerRef}
-          className="gallery-infinite-container relative max-w-4xl mx-auto h-[400px] md:h-[500px] rounded-3xl overflow-hidden bg-gradient-to-br from-cream/50 via-blush-pink/10 to-sage-green/10 backdrop-blur-sm border border-dusty-rose/20"
+          className="gallery-infinite-container relative max-w-3xl mx-auto h-[280px] md:h-[350px] rounded-3xl overflow-hidden bg-gradient-to-br from-cream/50 via-blush-pink/10 to-sage-green/10 backdrop-blur-sm border border-dusty-rose/20"
         >
           <div className="flex h-full w-full">
             {columns.map((columnImages, colIndex) => (

@@ -1,5 +1,5 @@
-import React from "react";
-import { useParallax } from "@/hooks/useParallax";
+import React, { useEffect, useRef } from "react";
+import gsap from "gsap";
 import floral1 from "@/assets/floral-1.png";
 import floral2 from "@/assets/floral-2.png";
 import floral3 from "@/assets/floral-3.png";
@@ -22,24 +22,8 @@ const FloralDecoration = ({
   parallaxSpeed,
   variant
 }: FloralDecorationProps) => {
-  // Different parallax speeds based on position for depth effect
-  const getDefaultSpeed = () => {
-    switch (position) {
-      case "top-left": return 0.15;
-      case "top-right": return 0.25;
-      case "bottom-left": return 0.2;
-      case "bottom-right": return 0.12;
-      case "left": return 0.18;
-      case "right": return 0.22;
-      default: return 0.2;
-    }
-  };
-
-  const parallax = useParallax({ 
-    speed: parallaxSpeed ?? getDefaultSpeed(), 
-    direction: "vertical",
-    maxOffset: 80 
-  });
+  const containerRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
 
   const sizeClasses = {
     sm: "w-24 h-24 md:w-32 md:h-32",
@@ -88,25 +72,54 @@ const FloralDecoration = ({
   };
 
   const currentImage = getFloralImage();
-  // All floral images should have sway animation
-  const shouldSway = true;
 
-  const parallaxStyle = enableParallax ? {
-    transform: `${baseTransforms[position]} translateY(${parallax.y}px) rotate(${parallax.rotate}deg)`,
-    transition: "transform 0.1s ease-out"
-  } : {
-    transform: baseTransforms[position]
-  };
+  useEffect(() => {
+    if (!imageRef.current) return;
+
+    const intensity = position === "top-left" || position === "bottom-right" ? 1 : 0.8;
+
+    const ctx = gsap.context(() => {
+      // Sway animation using GSAP
+      gsap.to(imageRef.current, {
+        rotation: 2 * intensity,
+        x: 3 * intensity,
+        duration: 2.5 + Math.random(),
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+
+      // Parallax effect on scroll
+      if (enableParallax) {
+        const speed = parallaxSpeed ?? 0.15;
+        
+        gsap.to(containerRef.current, {
+          y: () => window.scrollY * speed,
+          ease: "none",
+          scrollTrigger: {
+            trigger: "body",
+            start: "top top",
+            end: "bottom bottom",
+            scrub: true,
+          },
+        });
+      }
+    });
+
+    return () => ctx.revert();
+  }, [enableParallax, parallaxSpeed, position]);
 
   return (
     <div 
+      ref={containerRef}
       className={`absolute ${positionClasses[position]} ${sizeClasses[size]} pointer-events-none z-0 ${className}`}
-      style={parallaxStyle}
+      style={{ transform: baseTransforms[position] }}
     >
       <img 
+        ref={imageRef}
         src={currentImage} 
         alt="Floral decoration" 
-        className={`w-full h-full object-contain ${shouldSway ? 'animate-sway' : ''}`}
+        className="w-full h-full object-contain"
         style={{ transformOrigin: 'bottom center' }}
       />
     </div>

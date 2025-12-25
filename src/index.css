@@ -506,42 +506,159 @@
   transform-origin: bottom center;
 }
 
-/* Infinite Scroll Gallery */
-.gallery-infinite-container {
-  --item-height: 140px;
+/* Swaying Photo Gallery - Polaroid Style */
+.swaying-gallery {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  max-width: 100%;
+  padding: 20px;
+  perspective: 0;
 }
 
-.gallery-item {
-  height: var(--item-height);
+@media (min-width: 768px) {
+  .swaying-gallery {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
 }
 
-/* Gallery Column Animations - CodePen Style */
-@keyframes continuousSlideUp {
+/* Figure variations for different colors and timing */
+.swaying-figure:nth-child(7n) {
+  --duration: 1s;
+  --pin-color: hsl(var(--dusty-rose));
+}
+.swaying-figure:nth-child(7n + 1) {
+  --duration: 1.8s;
+  --pin-color: hsl(var(--sage-green));
+}
+.swaying-figure:nth-child(7n + 2) {
+  --duration: 1.3s;
+  --pin-color: hsl(var(--olive-green));
+}
+.swaying-figure:nth-child(7n + 3) {
+  --duration: 1.5s;
+  --pin-color: hsl(var(--soft-taupe));
+}
+.swaying-figure:nth-child(7n + 4) {
+  --duration: 1.1s;
+  --pin-color: hsl(var(--dusty-rose));
+}
+.swaying-figure:nth-child(7n + 5) {
+  --duration: 1.6s;
+  --pin-color: hsl(var(--sage-green));
+}
+.swaying-figure:nth-child(7n + 6) {
+  --duration: 1.2s;
+  --pin-color: hsl(var(--olive-green));
+}
+
+/* Angle variations */
+.swaying-figure:nth-child(3n) {
+  --angle: 3deg;
+}
+.swaying-figure:nth-child(3n + 1) {
+  --angle: -3.3deg;
+}
+.swaying-figure:nth-child(3n + 2) {
+  --angle: 2.4deg;
+}
+
+/* Direction variations */
+.swaying-figure:nth-child(odd) {
+  --direction: alternate;
+}
+.swaying-figure:nth-child(even) {
+  --direction: alternate-reverse;
+}
+
+.swaying-figure {
+  --angle: 3deg;
+  --count: 5;
+  --duration: 1s;
+  --delay: calc(-0.5 * var(--duration));
+  --direction: alternate;
+  --pin-color: hsl(var(--dusty-rose));
+
+  position: relative;
+  display: inline-block;
+  padding: 0.5rem;
+  border-radius: 8px;
+  box-shadow: 0 7px 8px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  height: auto;
+  text-align: center;
+  background-color: hsl(var(--cream));
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4b896' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: multiply;
+
+  transform-origin: center 0.22rem;
+  will-change: transform;
+  break-inside: avoid;
+  overflow: hidden;
+  outline: 1px solid transparent;
+  backface-visibility: hidden;
+}
+
+/* Active swing animation */
+.swaying-gallery.active .swaying-figure {
+  animation-duration: var(--duration), 1.5s;
+  animation-delay: var(--delay), calc(var(--delay) + var(--duration) * var(--count));
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: var(--count), 1;
+  animation-direction: var(--direction), normal;
+  animation-fill-mode: both;
+  animation-name: swing, swingEnd;
+}
+
+/* Pin decoration */
+.swaying-figure::after {
+  content: "";
+  position: absolute;
+  top: 0.22rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0.7rem;
+  height: 0.7rem;
+  background: var(--pin-color);
+  border-radius: 50%;
+  box-shadow: -0.1rem -0.1rem 0.3rem 0.02rem rgba(0, 0, 0, 0.5) inset;
+  filter: drop-shadow(0.3rem 0.15rem 0.2rem rgba(0, 0, 0, 0.5));
+  z-index: 2;
+}
+
+.swaying-figure img {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  pointer-events: none;
+  user-select: none;
+}
+
+.swaying-figure figcaption {
+  font-family: var(--font-script);
+  font-size: 14px;
+  font-weight: 400;
+  color: hsl(var(--foreground));
+  z-index: 1;
+}
+
+@keyframes swing {
   0% {
-    transform: translateY(0);
+    transform: rotate3d(0, 0, 1, calc(-1 * var(--angle)));
   }
   100% {
-    transform: translateY(-50%);
+    transform: rotate3d(0, 0, 1, var(--angle));
   }
 }
 
-@keyframes continuousSlideDown {
-  0% {
-    transform: translateY(-50%);
+@keyframes swingEnd {
+  to {
+    transform: rotate3d(0, 0, 1, 0deg);
   }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-.animate-slide-up {
-  animation: continuousSlideUp 30s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-.animate-slide-down {
-  animation: continuousSlideDown 30s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-.gallery-col:hover {
-  animation-play-state: paused;
 }

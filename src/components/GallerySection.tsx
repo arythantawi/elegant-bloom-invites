@@ -5,9 +5,9 @@ import couple1 from "@/assets/couple-1.jpg";
 import couple2 from "@/assets/couple-2.jpg";
 import venue from "@/assets/venue.jpg";
 import hero from "@/assets/hero-wedding.jpg";
+import couplePrewedding from "@/assets/couple-prewedding.png";
 import FloralDecoration from "./FloralDecoration";
 import SparklesDecoration from "./SparklesDecoration";
-import { Gallery3DScene } from "./Gallery3D";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -21,7 +21,6 @@ const GallerySection = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Header animations
       gsap.from(headerRef.current, {
         y: -30, opacity: 0, duration: 0.6, ease: "power3.out",
         scrollTrigger: { trigger: sectionRef.current, start: "top 80%", toggleActions: "play none none none" },
@@ -37,23 +36,13 @@ const GallerySection = () => {
         scrollTrigger: { trigger: sectionRef.current, start: "top 80%", toggleActions: "play none none none" },
       });
 
-      // 3D Gallery container animation
       if (galleryContainerRef.current) {
         gsap.from(galleryContainerRef.current, {
-          y: 50,
-          opacity: 0,
-          scale: 0.95,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: galleryContainerRef.current,
-            start: "top 85%",
-            toggleActions: "play none none none",
-          },
+          y: 50, opacity: 0, scale: 0.95, duration: 1, ease: "power3.out",
+          scrollTrigger: { trigger: galleryContainerRef.current, start: "top 85%", toggleActions: "play none none none" },
         });
       }
 
-      // Color palette animation
       if (paletteRef.current) {
         const colors = paletteRef.current.querySelectorAll('.color-item');
         gsap.from(colors, {
@@ -69,11 +58,18 @@ const GallerySection = () => {
   const galleryImages = [
     { src: couple1, alt: "Oky dan Mita - Foto 1" },
     { src: couple2, alt: "Oky dan Mita - Foto 2" },
+    { src: couplePrewedding, alt: "Pre-wedding" },
     { src: venue, alt: "Venue pernikahan" },
     { src: hero, alt: "Dekorasi pernikahan" },
-    { src: hero, alt: "Bouquet" },
-    { src: venue, alt: "Table setting" },
   ];
+
+  // Create 5 columns with duplicated images for infinite scroll
+  const columns = Array.from({ length: 5 }, (_, colIndex) => {
+    // Shuffle images differently for each column
+    const shuffled = [...galleryImages].sort(() => Math.random() - 0.5);
+    // Triple the images for seamless infinite scroll
+    return [...shuffled, ...shuffled, ...shuffled];
+  });
 
   return (
     <section 
@@ -98,24 +94,56 @@ const GallerySection = () => {
           <div ref={dividerRef} className="section-divider w-24 mx-auto" />
         </div>
 
-        {/* 3D Floating Tiles Gallery */}
+        {/* Infinite Scroll Column Gallery */}
         <div 
           ref={galleryContainerRef}
-          className="relative max-w-5xl mx-auto rounded-3xl overflow-hidden bg-gradient-to-br from-cream/50 via-blush-pink/10 to-sage-green/10 backdrop-blur-sm border border-dusty-rose/10"
+          className="gallery-infinite-container relative max-w-4xl mx-auto h-[400px] md:h-[500px] rounded-3xl overflow-hidden bg-gradient-to-br from-cream/50 via-blush-pink/10 to-sage-green/10 backdrop-blur-sm border border-dusty-rose/20"
         >
-          <Gallery3DScene images={galleryImages} />
-          
-          {/* Instruction hint */}
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-sm text-muted-foreground/70 flex items-center gap-2 bg-white/50 backdrop-blur-sm px-4 py-2 rounded-full">
-            <svg className="w-4 h-4 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
-            </svg>
-            <span>Gerakkan mouse untuk melihat efek 3D</span>
+          <div className="flex h-full w-full">
+            {columns.map((columnImages, colIndex) => (
+              <div
+                key={colIndex}
+                className={`gallery-column flex-1 overflow-hidden relative ${
+                  colIndex % 2 === 0 ? 'gallery-column-up' : 'gallery-column-down'
+                }`}
+                style={{
+                  animationDuration: `${18 + colIndex * 3}s`,
+                }}
+              >
+                <div className="flex flex-col">
+                  {columnImages.map((image, imgIndex) => (
+                    <div
+                      key={`${colIndex}-${imgIndex}`}
+                      className="gallery-item relative p-1"
+                    >
+                      <div className="w-full h-full overflow-hidden rounded-lg group cursor-pointer">
+                        <img
+                          src={image.src}
+                          alt={image.alt}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
+
+          {/* Gradient overlays for seamless effect */}
+          <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-cream to-transparent pointer-events-none z-10" />
+          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-cream to-transparent pointer-events-none z-10" />
         </div>
 
+        {/* Hint */}
+        <p className="text-center text-muted-foreground text-sm mt-6">
+          ✨ Hover untuk melihat lebih dekat
+        </p>
+
         {/* Color palette */}
-        <div ref={paletteRef} className="flex items-center justify-center gap-3 mt-16">
+        <div ref={paletteRef} className="flex items-center justify-center gap-3 mt-10">
           <div className="color-item w-10 h-10 rounded-lg bg-dusty-rose shadow-sm touch-bounce cursor-pointer hover:scale-110 transition-transform" />
           <div className="color-item w-10 h-10 rounded-lg bg-soft-taupe shadow-sm touch-bounce cursor-pointer hover:scale-110 transition-transform" />
           <div className="color-item w-10 h-10 rounded-lg bg-sage-green shadow-sm touch-bounce cursor-pointer hover:scale-110 transition-transform" />

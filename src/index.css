@@ -505,3 +505,42 @@
   animation: sway 5s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
   transform-origin: bottom center;
 }
+
+/* Infinite Scroll Gallery */
+.gallery-infinite-container {
+  --item-height: 140px;
+}
+
+.gallery-item {
+  height: var(--item-height);
+}
+
+@keyframes gallerySlideUp {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-33.333%);
+  }
+}
+
+@keyframes gallerySlideDown {
+  0% {
+    transform: translateY(-33.333%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.gallery-column-up {
+  animation: gallerySlideUp 15s linear infinite;
+}
+
+.gallery-column-down {
+  animation: gallerySlideDown 15s linear infinite;
+}
+
+.gallery-column:hover {
+  animation-play-state: paused;
+}

@@ -63,8 +63,8 @@ const GallerySection = () => {
     { src: hero, alt: "Dekorasi pernikahan" },
   ];
 
-  // Create 5 columns with images
-  const columns = Array.from({ length: 5 }, (_, colIndex) => {
+  // Create 3 columns with images
+  const columns = Array.from({ length: 3 }, (_, colIndex) => {
     const shuffled = [...galleryImages].sort(() => Math.random() - 0.5);
     // Duplicate for seamless infinite scroll
     return [...shuffled, ...shuffled];

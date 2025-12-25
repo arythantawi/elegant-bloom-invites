@@ -1,12 +1,17 @@
 import { useState, useRef, useEffect } from "react";
-import { Music, Play, Pause, SkipForward, SkipBack, Volume2, VolumeX } from "lucide-react";
+import gsap from "gsap";
+import { Play, Pause, SkipForward, SkipBack, Volume2, VolumeX } from "lucide-react";
 
 const MusicPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrack, setCurrentTrack] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
   const [showPlaylist, setShowPlaylist] = useState(false);
+  
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const playlistRef = useRef<HTMLDivElement>(null);
+  const pulseRef = useRef<HTMLDivElement>(null);
 
   const playlist = [
     { title: "Untuk Perempuan yang Sedang Dalam Pelukan", artist: "Payung Teduh" },
@@ -26,9 +31,7 @@ const MusicPlayer = () => {
       if (isPlaying) {
         audioRef.current.pause();
       } else {
-        audioRef.current.play().catch(() => {
-          // Autoplay was prevented
-        });
+        audioRef.current.play().catch(() => {});
       }
       setIsPlaying(!isPlaying);
     }
@@ -58,10 +61,8 @@ const MusicPlayer = () => {
   };
 
   useEffect(() => {
-    // Create audio element (placeholder - you would add actual audio URLs)
     audioRef.current = new Audio();
     audioRef.current.loop = false;
-    
     audioRef.current.addEventListener('ended', nextTrack);
     
     return () => {
@@ -72,14 +73,65 @@ const MusicPlayer = () => {
     };
   }, []);
 
+  // GSAP animations
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const ctx = gsap.context(() => {
+      // Initial slide in animation
+      gsap.from(containerRef.current, {
+        x: 100,
+        opacity: 0,
+        duration: 0.8,
+        delay: 2,
+        ease: "power3.out",
+      });
+    });
+
+    return () => ctx.revert();
+  }, []);
+
+  // Playlist animation
+  useEffect(() => {
+    if (!playlistRef.current) return;
+
+    if (showPlaylist) {
+      gsap.fromTo(playlistRef.current,
+        { scale: 0.9, opacity: 0, y: 20 },
+        { scale: 1, opacity: 1, y: 0, duration: 0.3, ease: "back.out(1.7)" }
+      );
+    }
+  }, [showPlaylist]);
+
+  // Pulse animation when playing
+  useEffect(() => {
+    if (!pulseRef.current) return;
+
+    if (isPlaying) {
+      gsap.to(pulseRef.current, {
+        scale: 1.5,
+        opacity: 0,
+        duration: 1,
+        repeat: -1,
+        ease: "power2.out",
+      });
+    } else {
+      gsap.killTweensOf(pulseRef.current);
+      gsap.set(pulseRef.current, { scale: 1, opacity: 0 });
+    }
+  }, [isPlaying]);
+
   return (
     <>
       {/* Floating Player Button */}
-      <div className="fixed bottom-6 right-6 z-50">
+      <div ref={containerRef} className="fixed bottom-6 right-6 z-50">
         <div className="relative">
           {/* Playlist Popup */}
           {showPlaylist && (
-            <div className="absolute bottom-20 right-0 w-72 max-h-80 overflow-y-auto bg-card/95 backdrop-blur-md rounded-2xl shadow-card border border-border/50 animate-scale-in">
+            <div 
+              ref={playlistRef}
+              className="absolute bottom-20 right-0 w-72 max-h-80 overflow-y-auto bg-card/95 backdrop-blur-md rounded-2xl shadow-card border border-border/50"
+            >
               <div className="p-4 border-b border-border/30">
                 <h3 className="font-display text-lg text-foreground">Playlist</h3>
               </div>
@@ -124,16 +176,24 @@ const MusicPlayer = () => {
               <SkipBack className="w-4 h-4" />
             </button>
 
-            <button
-              onClick={togglePlay}
-              className="w-14 h-14 rounded-full bg-gradient-to-br from-warm-blush to-accent shadow-glow flex items-center justify-center text-cream-white hover:scale-105 transition-transform"
-            >
-              {isPlaying ? (
-                <Pause className="w-6 h-6" />
-              ) : (
-                <Play className="w-6 h-6 ml-1" />
-              )}
-            </button>
+            <div className="relative">
+              {/* Pulse effect */}
+              <div 
+                ref={pulseRef}
+                className="absolute inset-0 w-14 h-14 rounded-full bg-warm-blush/30"
+                style={{ opacity: 0 }}
+              />
+              <button
+                onClick={togglePlay}
+                className="relative w-14 h-14 rounded-full bg-gradient-to-br from-warm-blush to-accent shadow-glow flex items-center justify-center text-cream-white hover:scale-105 transition-transform"
+              >
+                {isPlaying ? (
+                  <Pause className="w-6 h-6" />
+                ) : (
+                  <Play className="w-6 h-6 ml-1" />
+                )}
+              </button>
+            </div>
 
             <button
               onClick={nextTrack}
@@ -155,13 +215,6 @@ const MusicPlayer = () => {
           </div>
         </div>
       </div>
-
-      {/* Pulsing Music Icon when playing */}
-      {isPlaying && (
-        <div className="fixed bottom-6 right-6 z-40 pointer-events-none">
-          <div className="w-14 h-14 rounded-full bg-warm-blush/30 animate-ping" />
-        </div>
-      )}
     </>
   );
 };

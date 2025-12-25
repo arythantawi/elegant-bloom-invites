@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -7,8 +9,9 @@ import { Check, Heart, Users } from "lucide-react";
 import FloralDecoration from "./FloralDecoration";
 import SparklesDecoration from "./SparklesDecoration";
 
+gsap.registerPlugin(ScrollTrigger);
+
 const RSVPSection = () => {
-  const [isVisible, setIsVisible] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -19,18 +22,101 @@ const RSVPSection = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
+  const sectionRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLParagraphElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const dividerRef = useRef<HTMLDivElement>(null);
+  const descRef = useRef<HTMLParagraphElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting);
-      },
-      { threshold: 0.2 }
-    );
+    const ctx = gsap.context(() => {
+      gsap.from(headerRef.current, {
+        y: -30,
+        opacity: 0,
+        duration: 0.6,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      });
 
-    const section = document.getElementById("rsvp-section");
-    if (section) observer.observe(section);
+      gsap.from(titleRef.current, {
+        scale: 0.9,
+        opacity: 0,
+        duration: 0.7,
+        delay: 0.1,
+        ease: "back.out(1.7)",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      });
 
-    return () => observer.disconnect();
+      gsap.from(dividerRef.current, {
+        width: 0,
+        opacity: 0,
+        duration: 0.6,
+        delay: 0.2,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      });
+
+      gsap.from(descRef.current, {
+        y: 30,
+        opacity: 0,
+        duration: 0.6,
+        delay: 0.3,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      });
+
+      // Form card animation
+      gsap.from(formRef.current, {
+        y: 60,
+        scale: 0.95,
+        opacity: 0,
+        duration: 0.8,
+        delay: 0.2,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: formRef.current,
+          start: "top 85%",
+          toggleActions: "play none none none",
+        },
+      });
+
+      // Form fields stagger
+      if (formRef.current) {
+        const fields = formRef.current.querySelectorAll('.form-field');
+        gsap.from(fields, {
+          x: -30,
+          opacity: 0,
+          duration: 0.5,
+          stagger: 0.1,
+          delay: 0.4,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: formRef.current,
+            start: "top 85%",
+            toggleActions: "play none none none",
+          },
+        });
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -56,6 +142,7 @@ const RSVPSection = () => {
 
   return (
     <section
+      ref={sectionRef}
       id="rsvp-section"
       className="py-24 bg-gradient-to-b from-cream via-dusty-rose/10 to-cream relative overflow-hidden"
     >
@@ -64,42 +151,27 @@ const RSVPSection = () => {
       <SparklesDecoration count={4} />
 
       <div className="container max-w-2xl mx-auto px-4 relative z-10">
-        <div
-          className={`text-center mb-12 transition-all duration-700 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-          }`}
-        >
-          <p className={`font-display text-lg tracking-[0.2em] text-muted-foreground mb-4 uppercase transition-all duration-500 delay-100 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-6"
-          }`}>
+        <div className="text-center mb-12">
+          <p ref={headerRef} className="font-display text-lg tracking-[0.2em] text-muted-foreground mb-4 uppercase">
             Konfirmasi Kehadiran
           </p>
-          <h2 className={`font-script text-5xl md:text-6xl mb-6 transition-all duration-700 delay-200 ${
-            isVisible ? "opacity-100 scale-100" : "opacity-0 scale-90"
-          }`}>
+          <h2 ref={titleRef} className="font-script text-5xl md:text-6xl mb-6">
             <span className="text-dusty-rose">RSVP</span>
           </h2>
-          <div className={`section-divider mb-6 transition-all duration-500 delay-300 ${
-            isVisible ? "opacity-100 w-24" : "opacity-0 w-0"
-          }`} />
-          <p className={`text-muted-foreground max-w-md mx-auto transition-all duration-500 delay-400 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-          }`}>
+          <div ref={dividerRef} className="section-divider mb-6 w-24 mx-auto" />
+          <p ref={descRef} className="text-muted-foreground max-w-md mx-auto">
             Kehadiran Anda akan menjadi kebahagiaan terbesar bagi kami. Mohon konfirmasi kehadiran Anda sebelum 1 Februari 2025.
           </p>
         </div>
 
         <form
+          ref={formRef}
           onSubmit={handleSubmit}
-          className={`glass-card rounded-2xl p-8 md:p-10 touch-lift border-dusty-rose/20 transition-all duration-700 delay-200 ${
-            isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-12 scale-95"
-          }`}
+          className="glass-card rounded-2xl p-8 md:p-10 touch-lift border-dusty-rose/20"
         >
           <div className="space-y-6">
             {/* Name */}
-            <div className={`transition-all duration-500 ${
-              isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-6"
-            }`} style={{ transitionDelay: "400ms" }}>
+            <div className="form-field">
               <label className="block text-sm font-medium text-foreground mb-2 font-display">
                 Nama Lengkap
               </label>
@@ -114,9 +186,7 @@ const RSVPSection = () => {
             </div>
 
             {/* Email */}
-            <div className={`transition-all duration-500 ${
-              isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-6"
-            }`} style={{ transitionDelay: "500ms" }}>
+            <div className="form-field">
               <label className="block text-sm font-medium text-foreground mb-2 font-display">
                 Email
               </label>
@@ -131,9 +201,7 @@ const RSVPSection = () => {
             </div>
 
             {/* Attendance */}
-            <div className={`transition-all duration-500 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-            }`} style={{ transitionDelay: "600ms" }}>
+            <div className="form-field">
               <label className="block text-sm font-medium text-foreground mb-3 font-display">
                 Konfirmasi Kehadiran
               </label>
@@ -167,7 +235,7 @@ const RSVPSection = () => {
 
             {/* Number of Guests */}
             {formData.attendance === "hadir" && (
-              <div className="animate-fade-in transition-all duration-500">
+              <div className="form-field">
                 <label className="block text-sm font-medium text-foreground mb-2 font-display">
                   <Users className="w-4 h-4 inline mr-2 text-sage-green" />
                   Jumlah Tamu
@@ -186,9 +254,7 @@ const RSVPSection = () => {
             )}
 
             {/* Message */}
-            <div className={`transition-all duration-500 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-            }`} style={{ transitionDelay: "700ms" }}>
+            <div className="form-field">
               <label className="block text-sm font-medium text-foreground mb-2 font-display">
                 Ucapan & Doa
               </label>
@@ -205,10 +271,7 @@ const RSVPSection = () => {
             <Button
               type="submit"
               disabled={isSubmitting || !formData.attendance}
-              className={`w-full py-6 bg-gradient-to-r from-dusty-rose to-mauve hover:from-dusty-rose/90 hover:to-mauve/90 text-cream font-medium text-lg rounded-xl touch-bounce transition-all duration-500 disabled:opacity-50 ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-              }`}
-              style={{ transitionDelay: "800ms" }}
+              className="form-field w-full py-6 bg-gradient-to-r from-dusty-rose to-mauve hover:from-dusty-rose/90 hover:to-mauve/90 text-cream font-medium text-lg rounded-xl touch-bounce disabled:opacity-50"
             >
               {isSubmitting ? (
                 <span className="flex items-center gap-2">

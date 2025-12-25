@@ -63,8 +63,8 @@ const GallerySection = () => {
     { src: hero, alt: "Dekorasi pernikahan" },
   ];
 
-  // Create 5 columns with duplicated images for infinite scroll
-  const columns = Array.from({ length: 5 }, (_, colIndex) => {
+  // Create 3 columns with duplicated images for infinite scroll
+  const columns = Array.from({ length: 3 }, (_, colIndex) => {
     // Shuffle images differently for each column
     const shuffled = [...galleryImages].sort(() => Math.random() - 0.5);
     // Triple the images for seamless infinite scroll
